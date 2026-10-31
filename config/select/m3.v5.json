@@ -1,0 +1,1941 @@
+{
+  "segments": [
+    {
+      "start": 68.75,
+      "end": 76.01,
+      "shots": 8,
+      "regularity": 0.73,
+      "duration": 4.66,
+      "mean_interval": 0.666,
+      "min_interval": 0.32,
+      "max_interval": 1.32,
+      "gap_before": 2.2,
+      "gap_after": 0.0,
+      "score_peak": 0.202,
+      "hit_base": 0.166,
+      "max_motion": 0.164,
+      "hits": [
+        70.15,
+        71.47,
+        71.79,
+        72.19,
+        72.68,
+        73.81,
+        74.18,
+        74.81
+      ],
+      "score": 0.6738
+    },
+    {
+      "start": 170.2,
+      "end": 178.1,
+      "shots": 7,
+      "regularity": 0.803,
+      "duration": 5.8,
+      "mean_interval": 0.967,
+      "min_interval": 0.63,
+      "max_interval": 1.27,
+      "gap_before": 0.0,
+      "gap_after": 1.2,
+      "score_peak": 0.293,
+      "hit_base": 0.267,
+      "max_motion": 0.262,
+      "hits": [
+        171.1,
+        172.3,
+        173.1,
+        173.73,
+        174.49,
+        175.76,
+        176.9
+      ],
+      "score": 0.6734
+    },
+    {
+      "start": 231.55,
+      "end": 241.07,
+      "shots": 8,
+      "regularity": 0.81,
+      "duration": 7.42,
+      "mean_interval": 1.06,
+      "min_interval": 0.63,
+      "max_interval": 1.39,
+      "gap_before": 0.0,
+      "gap_after": 0.2,
+      "score_peak": 0.264,
+      "hit_base": 0.18,
+      "max_motion": 0.163,
+      "hits": [
+        232.45,
+        233.51,
+        234.9,
+        235.82,
+        237.15,
+        237.78,
+        238.84,
+        239.87
+      ],
+      "score": 0.6936
+    },
+    {
+      "start": 250.67,
+      "end": 258.5,
+      "shots": 9,
+      "regularity": 0.722,
+      "duration": 5.73,
+      "mean_interval": 0.716,
+      "min_interval": 0.31,
+      "max_interval": 1.4,
+      "gap_before": 0.0,
+      "gap_after": 0.6,
+      "score_peak": 0.218,
+      "hit_base": 0.152,
+      "max_motion": 0.19,
+      "hits": [
+        251.57,
+        252.19,
+        252.53,
+        252.84,
+        253.35,
+        254.62,
+        256.02,
+        256.51,
+        257.3
+      ],
+      "score": 0.709
+    },
+    {
+      "start": 286.88,
+      "end": 295.11,
+      "shots": 8,
+      "regularity": 0.75,
+      "duration": 6.13,
+      "mean_interval": 0.876,
+      "min_interval": 0.37,
+      "max_interval": 1.48,
+      "gap_before": 0.0,
+      "gap_after": 0.4,
+      "score_peak": 0.679,
+      "hit_base": 0.012,
+      "max_motion": 0.194,
+      "hits": [
+        287.78,
+        288.93,
+        289.61,
+        290.58,
+        290.95,
+        291.71,
+        292.43,
+        293.91
+      ],
+      "score": 0.6833
+    },
+    {
+      "start": 325.22,
+      "end": 340.88,
+      "shots": 14,
+      "regularity": 0.719,
+      "duration": 13.56,
+      "mean_interval": 1.043,
+      "min_interval": 0.24,
+      "max_interval": 1.56,
+      "gap_before": 0.0,
+      "gap_after": 0.4,
+      "score_peak": 0.266,
+      "hit_base": 0.174,
+      "max_motion": 0.196,
+      "hits": [
+        326.12,
+        327.38,
+        328.52,
+        329.98,
+        331.18,
+        332.19,
+        333.08,
+        334.62,
+        335.46,
+        336.73,
+        338.29,
+        338.78,
+        339.02,
+        339.68
+      ],
+      "score": 0.8758
+    },
+    {
+      "start": 346.23,
+      "end": 356.73,
+      "shots": 9,
+      "regularity": 0.701,
+      "duration": 8.0,
+      "mean_interval": 1.0,
+      "min_interval": 0.39,
+      "max_interval": 1.58,
+      "gap_before": 0.0,
+      "gap_after": 1.6,
+      "score_peak": 0.295,
+      "hit_base": 0.293,
+      "max_motion": 0.186,
+      "hits": [
+        347.13,
+        347.77,
+        349.35,
+        350.73,
+        351.66,
+        352.05,
+        353.63,
+        354.32,
+        355.13
+      ],
+      "score": 0.7032
+    },
+    {
+      "start": 518.97,
+      "end": 527.51,
+      "shots": 9,
+      "regularity": 0.71,
+      "duration": 6.44,
+      "mean_interval": 0.805,
+      "min_interval": 0.36,
+      "max_interval": 1.53,
+      "gap_before": 0.0,
+      "gap_after": 0.4,
+      "score_peak": 0.053,
+      "hit_base": 0.032,
+      "max_motion": 0.304,
+      "hits": [
+        519.87,
+        520.3,
+        521.83,
+        522.92,
+        523.37,
+        523.73,
+        524.19,
+        525.16,
+        526.31
+      ],
+      "score": 0.7231
+    },
+    {
+      "start": 619.37,
+      "end": 628.01,
+      "shots": 8,
+      "regularity": 0.705,
+      "duration": 6.34,
+      "mean_interval": 0.906,
+      "min_interval": 0.45,
+      "max_interval": 1.55,
+      "gap_before": 0.0,
+      "gap_after": 1.4,
+      "score_peak": 0.297,
+      "hit_base": 0.278,
+      "max_motion": 0.22,
+      "hits": [
+        620.27,
+        621.57,
+        622.76,
+        624.31,
+        624.8,
+        625.25,
+        626.14,
+        626.61
+      ],
+      "score": 0.6759
+    },
+    {
+      "start": 628.13,
+      "end": 641.83,
+      "shots": 14,
+      "regularity": 0.746,
+      "duration": 11.6,
+      "mean_interval": 0.892,
+      "min_interval": 0.31,
+      "max_interval": 1.44,
+      "gap_before": 0.0,
+      "gap_after": 1.0,
+      "score_peak": 0.334,
+      "hit_base": 0.169,
+      "max_motion": 0.326,
+      "hits": [
+        629.03,
+        629.86,
+        630.32,
+        631.01,
+        632.14,
+        633.33,
+        633.85,
+        634.51,
+        635.82,
+        636.97,
+        637.78,
+        639.22,
+        639.53,
+        640.63
+      ],
+      "score": 0.9021
+    },
+    {
+      "start": 671.81,
+      "end": 678.1,
+      "shots": 4,
+      "regularity": 0.892,
+      "duration": 4.19,
+      "mean_interval": 1.397,
+      "min_interval": 1.27,
+      "max_interval": 1.56,
+      "gap_before": 0.0,
+      "gap_after": 0.6,
+      "score_peak": 0.489,
+      "hit_base": 0.222,
+      "max_motion": 0.066,
+      "hits": [
+        672.71,
+        674.27,
+        675.63,
+        676.9
+      ],
+      "score": 0.5662
+    },
+    {
+      "start": 739.55,
+      "end": 747.87,
+      "shots": 11,
+      "regularity": 0.733,
+      "duration": 6.22,
+      "mean_interval": 0.622,
+      "min_interval": 0.25,
+      "max_interval": 1.23,
+      "gap_before": 0.0,
+      "gap_after": 0.4,
+      "score_peak": 0.309,
+      "hit_base": 0.313,
+      "max_motion": 0.194,
+      "hits": [
+        740.45,
+        740.96,
+        742.19,
+        742.48,
+        742.8,
+        743.15,
+        743.4,
+        744.59,
+        745.48,
+        746.33,
+        746.67
+      ],
+      "score": 0.779
+    },
+    {
+      "start": 906.78,
+      "end": 913.94,
+      "shots": 8,
+      "regularity": 0.776,
+      "duration": 4.56,
+      "mean_interval": 0.651,
+      "min_interval": 0.24,
+      "max_interval": 1.0,
+      "gap_before": 1.6,
+      "gap_after": 0.4,
+      "score_peak": 0.178,
+      "hit_base": 0.144,
+      "max_motion": 0.121,
+      "hits": [
+        908.18,
+        909.18,
+        909.66,
+        910.47,
+        911.47,
+        911.79,
+        912.03,
+        912.74
+      ],
+      "score": 0.6788
+    },
+    {
+      "start": 925.93,
+      "end": 932.73,
+      "shots": 7,
+      "regularity": 0.736,
+      "duration": 4.7,
+      "mean_interval": 0.783,
+      "min_interval": 0.19,
+      "max_interval": 1.35,
+      "gap_before": 0.0,
+      "gap_after": 0.2,
+      "score_peak": 0.465,
+      "hit_base": 0.239,
+      "max_motion": 0.244,
+      "hits": [
+        926.83,
+        927.02,
+        928.37,
+        929.21,
+        929.8,
+        930.52,
+        931.53
+      ],
+      "score": 0.6539
+    },
+    {
+      "start": 943.16,
+      "end": 953.28,
+      "shots": 13,
+      "regularity": 0.73,
+      "duration": 7.62,
+      "mean_interval": 0.635,
+      "min_interval": 0.2,
+      "max_interval": 1.28,
+      "gap_before": 0.0,
+      "gap_after": 1.6,
+      "score_peak": 0.274,
+      "hit_base": 0.313,
+      "max_motion": 0.191,
+      "hits": [
+        944.06,
+        945.22,
+        945.88,
+        946.08,
+        946.33,
+        946.68,
+        947.01,
+        947.46,
+        948.59,
+        949.49,
+        950.77,
+        951.34,
+        951.68
+      ],
+      "score": 0.8445
+    },
+    {
+      "start": 1029.71,
+      "end": 1035.89,
+      "shots": 6,
+      "regularity": 0.707,
+      "duration": 4.08,
+      "mean_interval": 0.816,
+      "min_interval": 0.31,
+      "max_interval": 1.32,
+      "gap_before": 0.0,
+      "gap_after": 1.2,
+      "score_peak": 0.303,
+      "hit_base": 0.052,
+      "max_motion": 0.113,
+      "hits": [
+        1030.61,
+        1031.61,
+        1032.72,
+        1034.04,
+        1034.38,
+        1034.69
+      ],
+      "score": 0.5937
+    },
+    {
+      "start": 1113.03,
+      "end": 1119.64,
+      "shots": 5,
+      "regularity": 0.857,
+      "duration": 4.51,
+      "mean_interval": 1.127,
+      "min_interval": 0.91,
+      "max_interval": 1.37,
+      "gap_before": 0.0,
+      "gap_after": 0.4,
+      "score_peak": 0.213,
+      "hit_base": 0.15,
+      "max_motion": 0.136,
+      "hits": [
+        1113.93,
+        1115.0,
+        1116.37,
+        1117.53,
+        1118.44
+      ],
+      "score": 0.6013
+    },
+    {
+      "start": 1136.68,
+      "end": 1144.98,
+      "shots": 9,
+      "regularity": 0.715,
+      "duration": 5.0,
+      "mean_interval": 0.625,
+      "min_interval": 0.18,
+      "max_interval": 1.34,
+      "gap_before": 0.0,
+      "gap_after": 2.4,
+      "score_peak": 0.173,
+      "hit_base": 0.122,
+      "max_motion": 0.148,
+      "hits": [
+        1137.58,
+        1137.88,
+        1138.76,
+        1139.11,
+        1139.55,
+        1140.89,
+        1142.0,
+        1142.18,
+        1142.58
+      ],
+      "score": 0.7009
+    },
+    {
+      "start": 1394.39,
+      "end": 1405.11,
+      "shots": 10,
+      "regularity": 0.709,
+      "duration": 8.62,
+      "mean_interval": 0.958,
+      "min_interval": 0.25,
+      "max_interval": 1.54,
+      "gap_before": 0.6,
+      "gap_after": 0.8,
+      "score_peak": 0.411,
+      "hit_base": 0.093,
+      "max_motion": 0.157,
+      "hits": [
+        1395.29,
+        1395.54,
+        1396.83,
+        1398.37,
+        1399.63,
+        1400.54,
+        1401.83,
+        1402.41,
+        1402.9,
+        1403.91
+      ],
+      "score": 0.7341
+    },
+    {
+      "start": 1497.37,
+      "end": 1505.1,
+      "shots": 10,
+      "regularity": 0.771,
+      "duration": 5.63,
+      "mean_interval": 0.626,
+      "min_interval": 0.29,
+      "max_interval": 1.26,
+      "gap_before": 0.4,
+      "gap_after": 0.0,
+      "score_peak": 0.13,
+      "hit_base": 0.005,
+      "max_motion": 0.107,
+      "hits": [
+        1498.27,
+        1498.9,
+        1500.16,
+        1501.08,
+        1501.53,
+        1502.11,
+        1502.49,
+        1502.78,
+        1503.13,
+        1503.9
+      ],
+      "score": 0.7421
+    },
+    {
+      "start": 1520.45,
+      "end": 1527.88,
+      "shots": 5,
+      "regularity": 0.862,
+      "duration": 5.33,
+      "mean_interval": 1.332,
+      "min_interval": 1.16,
+      "max_interval": 1.59,
+      "gap_before": 0.0,
+      "gap_after": 0.8,
+      "score_peak": 0.254,
+      "hit_base": 0.341,
+      "max_motion": 0.171,
+      "hits": [
+        1521.35,
+        1522.68,
+        1524.27,
+        1525.43,
+        1526.68
+      ],
+      "score": 0.6078
+    },
+    {
+      "start": 1605.1,
+      "end": 1613.21,
+      "shots": 5,
+      "regularity": 0.706,
+      "duration": 4.81,
+      "mean_interval": 1.202,
+      "min_interval": 0.52,
+      "max_interval": 1.54,
+      "gap_before": 0.0,
+      "gap_after": 2.4,
+      "score_peak": 0.434,
+      "hit_base": 0.0,
+      "max_motion": 0.195,
+      "hits": [
+        1606.0,
+        1606.52,
+        1607.73,
+        1609.27,
+        1610.81
+      ],
+      "score": 0.5724
+    },
+    {
+      "start": 1630.23,
+      "end": 1640.09,
+      "shots": 10,
+      "regularity": 0.746,
+      "duration": 6.96,
+      "mean_interval": 0.773,
+      "min_interval": 0.27,
+      "max_interval": 1.42,
+      "gap_before": 0.0,
+      "gap_after": 2.0,
+      "score_peak": 0.204,
+      "hit_base": 0.059,
+      "max_motion": 0.193,
+      "hits": [
+        1631.13,
+        1631.4,
+        1632.82,
+        1633.9,
+        1634.57,
+        1635.05,
+        1636.02,
+        1636.6,
+        1637.57,
+        1638.09
+      ],
+      "score": 0.7488
+    },
+    {
+      "start": 1698.84,
+      "end": 1703.93,
+      "shots": 6,
+      "regularity": 0.866,
+      "duration": 2.99,
+      "mean_interval": 0.598,
+      "min_interval": 0.35,
+      "max_interval": 0.76,
+      "gap_before": 0.0,
+      "gap_after": 1.0,
+      "score_peak": 0.0,
+      "hit_base": 0.0,
+      "max_motion": 0.197,
+      "hits": [
+        1699.74,
+        1700.47,
+        1700.96,
+        1701.31,
+        1702.07,
+        1702.73
+      ],
+      "score": 0.506
+    },
+    {
+      "start": 1709.08,
+      "end": 1716.44,
+      "shots": 5,
+      "regularity": 0.849,
+      "duration": 5.26,
+      "mean_interval": 1.315,
+      "min_interval": 1.05,
+      "max_interval": 1.51,
+      "gap_before": 0.0,
+      "gap_after": 0.2,
+      "score_peak": 0.45,
+      "hit_base": 0.162,
+      "max_motion": 0.042,
+      "hits": [
+        1709.98,
+        1711.03,
+        1712.54,
+        1713.8,
+        1715.24
+      ],
+      "score": 0.5852
+    },
+    {
+      "start": 1930.04,
+      "end": 1939.78,
+      "shots": 8,
+      "regularity": 0.706,
+      "duration": 6.44,
+      "mean_interval": 0.92,
+      "min_interval": 0.25,
+      "max_interval": 1.56,
+      "gap_before": 0.0,
+      "gap_after": 2.4,
+      "score_peak": 0.556,
+      "hit_base": 0.167,
+      "max_motion": 0.156,
+      "hits": [
+        1930.94,
+        1931.83,
+        1932.9,
+        1934.19,
+        1934.67,
+        1936.23,
+        1937.13,
+        1937.38
+      ],
+      "score": 0.6666
+    },
+    {
+      "start": 2071.48,
+      "end": 2080.38,
+      "shots": 9,
+      "regularity": 0.784,
+      "duration": 6.8,
+      "mean_interval": 0.85,
+      "min_interval": 0.45,
+      "max_interval": 1.43,
+      "gap_before": 0.0,
+      "gap_after": 0.4,
+      "score_peak": 0.303,
+      "hit_base": 0.185,
+      "max_motion": 0.272,
+      "hits": [
+        2072.38,
+        2073.23,
+        2074.04,
+        2075.47,
+        2076.14,
+        2076.78,
+        2077.72,
+        2078.17,
+        2079.18
+      ],
+      "score": 0.7368
+    },
+    {
+      "start": 2220.66,
+      "end": 2229.81,
+      "shots": 9,
+      "regularity": 0.697,
+      "duration": 6.25,
+      "mean_interval": 0.781,
+      "min_interval": 0.32,
+      "max_interval": 1.39,
+      "gap_before": 0.0,
+      "gap_after": 2.0,
+      "score_peak": 0.255,
+      "hit_base": 0.2,
+      "max_motion": 0.215,
+      "hits": [
+        2221.56,
+        2222.92,
+        2223.88,
+        2224.95,
+        2225.33,
+        2226.72,
+        2227.04,
+        2227.39,
+        2227.81
+      ],
+      "score": 0.7065
+    },
+    {
+      "start": 2363.39,
+      "end": 2378.22,
+      "shots": 16,
+      "regularity": 0.708,
+      "duration": 12.73,
+      "mean_interval": 0.849,
+      "min_interval": 0.35,
+      "max_interval": 1.56,
+      "gap_before": 0.4,
+      "gap_after": 0.4,
+      "score_peak": 0.065,
+      "hit_base": 0.053,
+      "max_motion": 0.275,
+      "hits": [
+        2364.29,
+        2365.31,
+        2366.19,
+        2367.17,
+        2367.52,
+        2368.37,
+        2369.9,
+        2371.46,
+        2372.02,
+        2372.51,
+        2372.94,
+        2373.47,
+        2374.04,
+        2374.39,
+        2375.82,
+        2377.02
+      ],
+      "score": 0.9516
+    },
+    {
+      "start": 2519.21,
+      "end": 2526.64,
+      "shots": 7,
+      "regularity": 0.681,
+      "duration": 5.33,
+      "mean_interval": 0.888,
+      "min_interval": 0.42,
+      "max_interval": 1.52,
+      "gap_before": 0.0,
+      "gap_after": 0.2,
+      "score_peak": 0.405,
+      "hit_base": 0.224,
+      "max_motion": 0.149,
+      "hits": [
+        2520.11,
+        2521.59,
+        2522.11,
+        2523.07,
+        2523.49,
+        2525.01,
+        2525.44
+      ],
+      "score": 0.6259
+    },
+    {
+      "start": 2611.14,
+      "end": 2621.93,
+      "shots": 9,
+      "regularity": 0.733,
+      "duration": 8.69,
+      "mean_interval": 1.086,
+      "min_interval": 0.24,
+      "max_interval": 1.43,
+      "gap_before": 0.0,
+      "gap_after": 1.2,
+      "score_peak": 0.357,
+      "hit_base": 0.276,
+      "max_motion": 0.134,
+      "hits": [
+        2612.04,
+        2613.36,
+        2613.6,
+        2614.91,
+        2615.83,
+        2616.79,
+        2618.16,
+        2619.59,
+        2620.73
+      ],
+      "score": 0.7034
+    },
+    {
+      "start": 2686.09,
+      "end": 2693.88,
+      "shots": 9,
+      "regularity": 0.736,
+      "duration": 5.69,
+      "mean_interval": 0.711,
+      "min_interval": 0.27,
+      "max_interval": 1.4,
+      "gap_before": 0.0,
+      "gap_after": 0.4,
+      "score_peak": 0.222,
+      "hit_base": 0.188,
+      "max_motion": 0.146,
+      "hits": [
+        2686.99,
+        2687.36,
+        2688.18,
+        2688.81,
+        2690.21,
+        2690.48,
+        2691.32,
+        2691.68,
+        2692.68
+      ],
+      "score": 0.7059
+    },
+    {
+      "start": 2778.25,
+      "end": 2787.89,
+      "shots": 8,
+      "regularity": 0.681,
+      "duration": 7.54,
+      "mean_interval": 1.077,
+      "min_interval": 0.32,
+      "max_interval": 1.51,
+      "gap_before": 0.0,
+      "gap_after": 0.2,
+      "score_peak": 0.137,
+      "hit_base": 0.105,
+      "max_motion": 0.189,
+      "hits": [
+        2779.15,
+        2780.66,
+        2780.98,
+        2782.42,
+        2783.82,
+        2784.37,
+        2785.88,
+        2786.69
+      ],
+      "score": 0.6653
+    },
+    {
+      "start": 2795.82,
+      "end": 2804.86,
+      "shots": 8,
+      "regularity": 0.761,
+      "duration": 6.94,
+      "mean_interval": 0.991,
+      "min_interval": 0.51,
+      "max_interval": 1.51,
+      "gap_before": 0.2,
+      "gap_after": 0.2,
+      "score_peak": 0.269,
+      "hit_base": 0.14,
+      "max_motion": 0.165,
+      "hits": [
+        2796.72,
+        2797.83,
+        2798.34,
+        2799.13,
+        2799.84,
+        2801.35,
+        2802.49,
+        2803.66
+      ],
+      "score": 0.6817
+    },
+    {
+      "start": 2981.8,
+      "end": 2990.17,
+      "shots": 5,
+      "regularity": 0.813,
+      "duration": 4.57,
+      "mean_interval": 1.142,
+      "min_interval": 0.95,
+      "max_interval": 1.52,
+      "gap_before": 1.6,
+      "gap_after": 2.4,
+      "score_peak": 0.47,
+      "hit_base": 0.297,
+      "max_motion": 0.188,
+      "hits": [
+        2983.2,
+        2984.16,
+        2985.3,
+        2986.25,
+        2987.77
+      ],
+      "score": 0.5981
+    },
+    {
+      "start": 3128.33,
+      "end": 3144.81,
+      "shots": 16,
+      "regularity": 0.72,
+      "duration": 13.78,
+      "mean_interval": 0.919,
+      "min_interval": 0.19,
+      "max_interval": 1.54,
+      "gap_before": 0.0,
+      "gap_after": 1.8,
+      "score_peak": 0.199,
+      "hit_base": 0.17,
+      "max_motion": 0.164,
+      "hits": [
+        3129.23,
+        3130.4,
+        3131.94,
+        3132.78,
+        3133.39,
+        3134.41,
+        3134.6,
+        3135.67,
+        3135.93,
+        3136.87,
+        3138.11,
+        3139.35,
+        3140.23,
+        3141.6,
+        3141.97,
+        3143.01
+      ],
+      "score": 0.9379
+    },
+    {
+      "start": 3300.75,
+      "end": 3308.82,
+      "shots": 8,
+      "regularity": 0.681,
+      "duration": 5.97,
+      "mean_interval": 0.853,
+      "min_interval": 0.3,
+      "max_interval": 1.58,
+      "gap_before": 0.0,
+      "gap_after": 0.8,
+      "score_peak": 0.426,
+      "hit_base": 0.148,
+      "max_motion": 0.255,
+      "hits": [
+        3301.65,
+        3301.95,
+        3302.67,
+        3303.37,
+        3304.95,
+        3306.4,
+        3306.7,
+        3307.62
+      ],
+      "score": 0.6752
+    },
+    {
+      "start": 3326.8,
+      "end": 3335.93,
+      "shots": 10,
+      "regularity": 0.718,
+      "duration": 7.03,
+      "mean_interval": 0.781,
+      "min_interval": 0.27,
+      "max_interval": 1.38,
+      "gap_before": 0.4,
+      "gap_after": 1.2,
+      "score_peak": 0.289,
+      "hit_base": 0.209,
+      "max_motion": 0.206,
+      "hits": [
+        3327.7,
+        3329.01,
+        3329.92,
+        3330.22,
+        3331.31,
+        3331.75,
+        3332.02,
+        3332.68,
+        3333.35,
+        3334.73
+      ],
+      "score": 0.7437
+    },
+    {
+      "start": 3345.33,
+      "end": 3352.18,
+      "shots": 8,
+      "regularity": 0.818,
+      "duration": 4.75,
+      "mean_interval": 0.679,
+      "min_interval": 0.36,
+      "max_interval": 1.12,
+      "gap_before": 0.0,
+      "gap_after": 0.2,
+      "score_peak": 0.304,
+      "hit_base": 0.084,
+      "max_motion": 0.111,
+      "hits": [
+        3346.23,
+        3346.93,
+        3347.29,
+        3348.41,
+        3348.96,
+        3349.51,
+        3350.18,
+        3350.98
+      ],
+      "score": 0.6878
+    },
+    {
+      "start": 3411.27,
+      "end": 3417.67,
+      "shots": 5,
+      "regularity": 0.784,
+      "duration": 4.3,
+      "mean_interval": 1.075,
+      "min_interval": 0.6,
+      "max_interval": 1.27,
+      "gap_before": 0.6,
+      "gap_after": 0.0,
+      "score_peak": 0.18,
+      "hit_base": 0.07,
+      "max_motion": 0.18,
+      "hits": [
+        3412.17,
+        3412.77,
+        3413.95,
+        3415.2,
+        3416.47
+      ],
+      "score": 0.5897
+    },
+    {
+      "start": 3472.23,
+      "end": 3478.64,
+      "shots": 5,
+      "regularity": 0.771,
+      "duration": 4.31,
+      "mean_interval": 1.077,
+      "min_interval": 0.65,
+      "max_interval": 1.48,
+      "gap_before": 0.0,
+      "gap_after": 0.8,
+      "score_peak": 0.335,
+      "hit_base": 0.141,
+      "max_motion": 0.117,
+      "hits": [
+        3473.13,
+        3474.28,
+        3474.93,
+        3476.41,
+        3477.44
+      ],
+      "score": 0.577
+    }
+  ],
+  "total": 329.89,
+  "target": 330.0,
+  "speed": 1.1,
+  "candidates": 101,
+  "dropped": 120,
+  "drop_reasons": {
+    "boundary_split": 26,
+    "no_score_evidence": 94
+  },
+  "dropped_detail": [
+    {
+      "start": 15.780000000000001,
+      "end": 17.67,
+      "shots": 4,
+      "reason": "boundary_split",
+      "detail": "前 0.0s / 后 0.0s 均无明显能量变化"
+    },
+    {
+      "start": 53.61,
+      "end": 56.15,
+      "shots": 4,
+      "reason": "boundary_split",
+      "detail": "前 0.0s / 后 0.0s 均无明显能量变化"
+    },
+    {
+      "start": 62.370000000000005,
+      "end": 68.05,
+      "shots": 12,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.00 不显著(基准 0.16)"
+    },
+    {
+      "start": 80.78,
+      "end": 88.9,
+      "shots": 11,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.05 不显著(基准 0.23)"
+    },
+    {
+      "start": 98.96000000000001,
+      "end": 102.09,
+      "shots": 4,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.01 不显著(基准 0.32)"
+    },
+    {
+      "start": 107.99000000000001,
+      "end": 114.02,
+      "shots": 9,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.01 不显著(基准 0.13)"
+    },
+    {
+      "start": 138.98,
+      "end": 142.26,
+      "shots": 6,
+      "reason": "boundary_split",
+      "detail": "前 0.0s / 后 0.0s 均无明显能量变化"
+    },
+    {
+      "start": 153.03,
+      "end": 159.58,
+      "shots": 10,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.00 不显著(基准 0.17)"
+    },
+    {
+      "start": 178.75,
+      "end": 183.92000000000002,
+      "shots": 7,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.08 不显著(基准 0.16)"
+    },
+    {
+      "start": 243.78,
+      "end": 249.12,
+      "shots": 6,
+      "reason": "boundary_split",
+      "detail": "前 0.0s / 后 0.0s 均无明显能量变化"
+    },
+    {
+      "start": 273.54,
+      "end": 278.55,
+      "shots": 7,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.10 不显著(基准 0.10)"
+    },
+    {
+      "start": 295.85,
+      "end": 297.44,
+      "shots": 4,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.07 不显著(基准 0.08)"
+    },
+    {
+      "start": 316.62,
+      "end": 321.38,
+      "shots": 8,
+      "reason": "boundary_split",
+      "detail": "前 0.0s / 后 0.0s 均无明显能量变化"
+    },
+    {
+      "start": 359.78000000000003,
+      "end": 370.67,
+      "shots": 16,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.00 不显著(基准 0.20)"
+    },
+    {
+      "start": 400.91,
+      "end": 405.40000000000003,
+      "shots": 7,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.00 不显著(基准 0.05)"
+    },
+    {
+      "start": 415.03000000000003,
+      "end": 421.7,
+      "shots": 9,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.00 不显著(基准 0.19)"
+    },
+    {
+      "start": 430.76,
+      "end": 433.82,
+      "shots": 4,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.13 不显著(基准 0.15)"
+    },
+    {
+      "start": 436.1,
+      "end": 439.1,
+      "shots": 6,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.01 不显著(基准 0.25)"
+    },
+    {
+      "start": 453.79,
+      "end": 456.92,
+      "shots": 6,
+      "reason": "boundary_split",
+      "detail": "前 0.0s / 后 0.0s 均无明显能量变化"
+    },
+    {
+      "start": 465.35,
+      "end": 468.67,
+      "shots": 8,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.15 不显著(基准 0.19)"
+    },
+    {
+      "start": 470.89,
+      "end": 475.2,
+      "shots": 6,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.00 不显著(基准 0.23)"
+    },
+    {
+      "start": 487.58,
+      "end": 493.36,
+      "shots": 10,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.21 不显著(基准 0.24)"
+    },
+    {
+      "start": 565.78,
+      "end": 570.3100000000001,
+      "shots": 6,
+      "reason": "boundary_split",
+      "detail": "前 0.0s / 后 0.0s 均无明显能量变化"
+    },
+    {
+      "start": 586.22,
+      "end": 589.79,
+      "shots": 4,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.00 不显著(基准 0.13)"
+    },
+    {
+      "start": 599.61,
+      "end": 604.7,
+      "shots": 6,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.01 不显著(基准 0.24)"
+    },
+    {
+      "start": 606.5500000000001,
+      "end": 608.84,
+      "shots": 4,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.04 不显著(基准 0.10)"
+    },
+    {
+      "start": 657.37,
+      "end": 660.63,
+      "shots": 5,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.02 不显著(基准 0.03)"
+    },
+    {
+      "start": 706.24,
+      "end": 709.89,
+      "shots": 4,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.11 不显著(基准 0.26)"
+    },
+    {
+      "start": 720.5600000000001,
+      "end": 724.19,
+      "shots": 5,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.24 不显著(基准 0.30)"
+    },
+    {
+      "start": 730.92,
+      "end": 734.15,
+      "shots": 6,
+      "reason": "boundary_split",
+      "detail": "前 0.0s / 后 0.0s 均无明显能量变化"
+    },
+    {
+      "start": 789.1700000000001,
+      "end": 794.73,
+      "shots": 6,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.18 不显著(基准 0.25)"
+    },
+    {
+      "start": 807.03,
+      "end": 811.5500000000001,
+      "shots": 9,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.00 不显著(基准 0.19)"
+    },
+    {
+      "start": 832.87,
+      "end": 843.38,
+      "shots": 15,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.21 不显著(基准 0.26)"
+    },
+    {
+      "start": 875.8100000000001,
+      "end": 879.89,
+      "shots": 8,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.14 不显著(基准 0.22)"
+    },
+    {
+      "start": 937.22,
+      "end": 940.34,
+      "shots": 4,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.21 不显著(基准 0.23)"
+    },
+    {
+      "start": 970.9,
+      "end": 978.0500000000001,
+      "shots": 12,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.00 不显著(基准 0.14)"
+    },
+    {
+      "start": 989.71,
+      "end": 993.49,
+      "shots": 8,
+      "reason": "boundary_split",
+      "detail": "前 0.0s / 后 0.0s 均无明显能量变化"
+    },
+    {
+      "start": 996.16,
+      "end": 1006.83,
+      "shots": 18,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.00 不显著(基准 0.20)"
+    },
+    {
+      "start": 1014.63,
+      "end": 1016.65,
+      "shots": 4,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.13 不显著(基准 0.49)"
+    },
+    {
+      "start": 1023.59,
+      "end": 1028.29,
+      "shots": 6,
+      "reason": "boundary_split",
+      "detail": "前 0.0s / 后 0.0s 均无明显能量变化"
+    },
+    {
+      "start": 1054.06,
+      "end": 1061.35,
+      "shots": 7,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.25 不显著(基准 0.23)"
+    },
+    {
+      "start": 1076.23,
+      "end": 1078.89,
+      "shots": 5,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.05 不显著(基准 0.14)"
+    },
+    {
+      "start": 1175.94,
+      "end": 1178.71,
+      "shots": 7,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.00 不显著(基准 0.10)"
+    },
+    {
+      "start": 1206.34,
+      "end": 1213.68,
+      "shots": 8,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.00 不显著(基准 0.30)"
+    },
+    {
+      "start": 1237.8,
+      "end": 1241.8700000000001,
+      "shots": 6,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.21 不显著(基准 0.26)"
+    },
+    {
+      "start": 1286.19,
+      "end": 1292.44,
+      "shots": 9,
+      "reason": "boundary_split",
+      "detail": "前 0.0s / 后 0.0s 均无明显能量变化"
+    },
+    {
+      "start": 1329.51,
+      "end": 1338.66,
+      "shots": 12,
+      "reason": "boundary_split",
+      "detail": "前 0.0s / 后 0.0s 均无明显能量变化"
+    },
+    {
+      "start": 1343.65,
+      "end": 1351.1200000000001,
+      "shots": 10,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.00 不显著(基准 0.05)"
+    },
+    {
+      "start": 1359.8500000000001,
+      "end": 1370.24,
+      "shots": 12,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.21 不显著(基准 0.20)"
+    },
+    {
+      "start": 1410.8700000000001,
+      "end": 1413.52,
+      "shots": 6,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.00 不显著(基准 0.32)"
+    },
+    {
+      "start": 1421.05,
+      "end": 1423.9,
+      "shots": 4,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.24 不显著(基准 0.28)"
+    },
+    {
+      "start": 1433.26,
+      "end": 1435.8700000000001,
+      "shots": 5,
+      "reason": "boundary_split",
+      "detail": "前 0.0s / 后 0.0s 均无明显能量变化"
+    },
+    {
+      "start": 1459.07,
+      "end": 1460.55,
+      "shots": 4,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.20 不显著(基准 0.21)"
+    },
+    {
+      "start": 1482.34,
+      "end": 1484.95,
+      "shots": 5,
+      "reason": "boundary_split",
+      "detail": "前 0.0s / 后 0.0s 均无明显能量变化"
+    },
+    {
+      "start": 1596.07,
+      "end": 1599.04,
+      "shots": 5,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.15 不显著(基准 0.32)"
+    },
+    {
+      "start": 1616.45,
+      "end": 1618.3400000000001,
+      "shots": 4,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.17 不显著(基准 0.44)"
+    },
+    {
+      "start": 1659.93,
+      "end": 1661.71,
+      "shots": 4,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.20 不显著(基准 0.36)"
+    },
+    {
+      "start": 1671.79,
+      "end": 1675.13,
+      "shots": 5,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.22 不显著(基准 0.21)"
+    },
+    {
+      "start": 1690.24,
+      "end": 1694.08,
+      "shots": 6,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.12 不显著(基准 0.13)"
+    },
+    {
+      "start": 1781.83,
+      "end": 1785.69,
+      "shots": 6,
+      "reason": "boundary_split",
+      "detail": "前 0.0s / 后 0.0s 均无明显能量变化"
+    },
+    {
+      "start": 1789.76,
+      "end": 1793.31,
+      "shots": 6,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.00 不显著(基准 0.13)"
+    },
+    {
+      "start": 1840.21,
+      "end": 1842.7,
+      "shots": 4,
+      "reason": "boundary_split",
+      "detail": "前 0.0s / 后 0.0s 均无明显能量变化"
+    },
+    {
+      "start": 1846.0900000000001,
+      "end": 1851.56,
+      "shots": 8,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.19 不显著(基准 0.23)"
+    },
+    {
+      "start": 1859.9,
+      "end": 1865.94,
+      "shots": 8,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.24 不显著(基准 0.25)"
+    },
+    {
+      "start": 1972.1100000000001,
+      "end": 1979.67,
+      "shots": 10,
+      "reason": "boundary_split",
+      "detail": "前 0.0s / 后 0.0s 均无明显能量变化"
+    },
+    {
+      "start": 1997.74,
+      "end": 2004.01,
+      "shots": 10,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.13 不显著(基准 0.36)"
+    },
+    {
+      "start": 2009.65,
+      "end": 2018.17,
+      "shots": 11,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.06 不显著(基准 0.17)"
+    },
+    {
+      "start": 2025.16,
+      "end": 2027.48,
+      "shots": 4,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.08 不显著(基准 0.38)"
+    },
+    {
+      "start": 2035.69,
+      "end": 2041.8700000000001,
+      "shots": 9,
+      "reason": "boundary_split",
+      "detail": "前 0.0s / 后 0.0s 均无明显能量变化"
+    },
+    {
+      "start": 2083.66,
+      "end": 2086.79,
+      "shots": 6,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.16 不显著(基准 0.21)"
+    },
+    {
+      "start": 2104.53,
+      "end": 2108.9,
+      "shots": 7,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.11 不显著(基准 0.37)"
+    },
+    {
+      "start": 2133.3,
+      "end": 2139.3,
+      "shots": 7,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.00 不显著(基准 0.23)"
+    },
+    {
+      "start": 2208.23,
+      "end": 2210.77,
+      "shots": 4,
+      "reason": "boundary_split",
+      "detail": "前 0.0s / 后 0.0s 均无明显能量变化"
+    },
+    {
+      "start": 2216.17,
+      "end": 2217.66,
+      "shots": 4,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.21 不显著(基准 0.33)"
+    },
+    {
+      "start": 2263.71,
+      "end": 2267.28,
+      "shots": 7,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.18 不显著(基准 0.24)"
+    },
+    {
+      "start": 2284.67,
+      "end": 2293.33,
+      "shots": 10,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.13 不显著(基准 0.13)"
+    },
+    {
+      "start": 2342.27,
+      "end": 2347.92,
+      "shots": 7,
+      "reason": "boundary_split",
+      "detail": "前 0.0s / 后 0.0s 均无明显能量变化"
+    },
+    {
+      "start": 2395.37,
+      "end": 2399.3,
+      "shots": 5,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.18 不显著(基准 0.18)"
+    },
+    {
+      "start": 2443.39,
+      "end": 2446.7400000000002,
+      "shots": 5,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.02 不显著(基准 0.28)"
+    },
+    {
+      "start": 2466.4500000000003,
+      "end": 2474.4700000000003,
+      "shots": 11,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.15 不显著(基准 0.25)"
+    },
+    {
+      "start": 2490.68,
+      "end": 2493.01,
+      "shots": 6,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.08 不显著(基准 0.21)"
+    },
+    {
+      "start": 2532.38,
+      "end": 2534.38,
+      "shots": 4,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.20 不显著(基准 0.20)"
+    },
+    {
+      "start": 2577.46,
+      "end": 2581.25,
+      "shots": 5,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.08 不显著(基准 0.17)"
+    },
+    {
+      "start": 2583.98,
+      "end": 2589.66,
+      "shots": 6,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.04 不显著(基准 0.41)"
+    },
+    {
+      "start": 2622.61,
+      "end": 2625.92,
+      "shots": 5,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.22 不显著(基准 0.31)"
+    },
+    {
+      "start": 2664.08,
+      "end": 2668.8,
+      "shots": 5,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.11 不显著(基准 0.16)"
+    },
+    {
+      "start": 2735.1,
+      "end": 2737.57,
+      "shots": 5,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.10 不显著(基准 0.13)"
+    },
+    {
+      "start": 2743.03,
+      "end": 2746.93,
+      "shots": 5,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.24 不显著(基准 0.25)"
+    },
+    {
+      "start": 2755.7400000000002,
+      "end": 2759.81,
+      "shots": 6,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.17 不显著(基准 0.23)"
+    },
+    {
+      "start": 2761.9,
+      "end": 2774.02,
+      "shots": 18,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.11 不显著(基准 0.15)"
+    },
+    {
+      "start": 2850.25,
+      "end": 2853.14,
+      "shots": 4,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.00 不显著(基准 0.20)"
+    },
+    {
+      "start": 2891.1,
+      "end": 2893.79,
+      "shots": 5,
+      "reason": "boundary_split",
+      "detail": "前 0.0s / 后 0.0s 均无明显能量变化"
+    },
+    {
+      "start": 2904.1,
+      "end": 2907.82,
+      "shots": 5,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.24 不显著(基准 0.41)"
+    },
+    {
+      "start": 2911.11,
+      "end": 2914.18,
+      "shots": 6,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.00 不显著(基准 0.06)"
+    },
+    {
+      "start": 2921.2200000000003,
+      "end": 2926.39,
+      "shots": 7,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.24 不显著(基准 0.36)"
+    },
+    {
+      "start": 2953.51,
+      "end": 2956.4900000000002,
+      "shots": 4,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.08 不显著(基准 0.20)"
+    },
+    {
+      "start": 2970.29,
+      "end": 2976.86,
+      "shots": 8,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.19 不显著(基准 0.28)"
+    },
+    {
+      "start": 3065.76,
+      "end": 3068.0,
+      "shots": 4,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.05 不显著(基准 0.10)"
+    },
+    {
+      "start": 3113.83,
+      "end": 3119.54,
+      "shots": 7,
+      "reason": "boundary_split",
+      "detail": "前 0.0s / 后 0.0s 均无明显能量变化"
+    },
+    {
+      "start": 3123.32,
+      "end": 3125.94,
+      "shots": 4,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.11 不显著(基准 0.25)"
+    },
+    {
+      "start": 3185.94,
+      "end": 3188.84,
+      "shots": 4,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.21 不显著(基准 0.20)"
+    },
+    {
+      "start": 3208.4900000000002,
+      "end": 3213.9300000000003,
+      "shots": 7,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.00 不显著(基准 0.29)"
+    },
+    {
+      "start": 3220.23,
+      "end": 3225.23,
+      "shots": 5,
+      "reason": "boundary_split",
+      "detail": "前 0.0s / 后 0.0s 均无明显能量变化"
+    },
+    {
+      "start": 3237.7400000000002,
+      "end": 3239.8,
+      "shots": 5,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.08 不显著(基准 0.18)"
+    },
+    {
+      "start": 3276.41,
+      "end": 3278.9700000000003,
+      "shots": 4,
+      "reason": "boundary_split",
+      "detail": "前 0.0s / 后 0.0s 均无明显能量变化"
+    },
+    {
+      "start": 3281.0,
+      "end": 3282.89,
+      "shots": 4,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.05 不显著(基准 0.07)"
+    },
+    {
+      "start": 3295.52,
+      "end": 3298.66,
+      "shots": 5,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.13 不显著(基准 0.13)"
+    },
+    {
+      "start": 3313.14,
+      "end": 3319.15,
+      "shots": 7,
+      "reason": "boundary_split",
+      "detail": "前 0.0s / 后 0.0s 均无明显能量变化"
+    },
+    {
+      "start": 3356.1800000000003,
+      "end": 3361.34,
+      "shots": 9,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.07 不显著(基准 0.23)"
+    },
+    {
+      "start": 3365.17,
+      "end": 3366.87,
+      "shots": 4,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.12 不显著(基准 0.24)"
+    },
+    {
+      "start": 3420.78,
+      "end": 3423.46,
+      "shots": 4,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.13 不显著(基准 0.19)"
+    },
+    {
+      "start": 3446.53,
+      "end": 3452.6,
+      "shots": 10,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.12 不显著(基准 0.19)"
+    },
+    {
+      "start": 3484.84,
+      "end": 3489.55,
+      "shots": 8,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.23 不显著(基准 0.38)"
+    },
+    {
+      "start": 3520.0,
+      "end": 3524.7200000000003,
+      "shots": 6,
+      "reason": "boundary_split",
+      "detail": "前 0.0s / 后 0.0s 均无明显能量变化"
+    },
+    {
+      "start": 3581.48,
+      "end": 3584.28,
+      "shots": 6,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.22 不显著(基准 0.33)"
+    },
+    {
+      "start": 3586.55,
+      "end": 3589.16,
+      "shots": 5,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.05 不显著(基准 0.06)"
+    },
+    {
+      "start": 3597.09,
+      "end": 3601.53,
+      "shots": 6,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.00 不显著(基准 0.13)"
+    },
+    {
+      "start": 3622.01,
+      "end": 3625.16,
+      "shots": 6,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.13 不显著(基准 0.19)"
+    },
+    {
+      "start": 3639.01,
+      "end": 3642.27,
+      "shots": 5,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.14 不显著(基准 0.21)"
+    },
+    {
+      "start": 3667.23,
+      "end": 3670.42,
+      "shots": 5,
+      "reason": "no_score_evidence",
+      "detail": "末拍后峰值 0.20 不显著(基准 0.34)"
+    }
+  ]
+}

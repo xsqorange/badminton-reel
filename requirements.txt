@@ -1,0 +1,18 @@
+# 羽毛球集锦剪辑管线依赖
+#
+# 系统依赖(不通过 pip 安装):
+#   - ffmpeg  (需含 h264_nvenc / hevc_nvenc 编码器)
+#   - NVIDIA 显卡 + 驱动(用于 NVENC 硬编)
+#   验证: ffmpeg -encoders | grep nvenc
+#
+# Python 依赖:
+#   numpy   - 击球瞬态检测与音频包络计算
+#   PyYAML  - pipeline.py 的配置读取(若不用内置解析器则必需)
+#   Pillow  - 联系表拼图(tools/ 下的核验脚本)
+
+numpy>=1.24
+PyYAML>=6.0
+Pillow>=10.0
+
+# 可选:
+#   opencv-python  - 自动遮挡检测实验(方案 2.4 已证明不可靠,默认不用)

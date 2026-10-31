@@ -1,0 +1,25 @@
+{
+  "requests": [
+    {
+      "prompt": "Driving sports electronic instrumental with punchy kick drums and bright plucky synth arpeggios, tension building section with filtered bass and rising risers, energetic and competitive, 124 BPM, instrumental only, no vocals",
+      "format": "mp3",
+      "bitrate": 256000,
+      "sample_rate": 44100,
+      "output_file": "bgm_part2.mp3"
+    },
+    {
+      "prompt": "Triumphant energetic instrumental with big stadium drums, claps, bright electric guitar riff and uplifting synth chords, celebratory victory feeling, 120 BPM, instrumental only, no vocals",
+      "format": "mp3",
+      "bitrate": 256000,
+      "sample_rate": 44100,
+      "output_file": "bgm_part3.mp3"
+    },
+    {
+      "prompt": "Fast energetic hybrid orchestral electronic instrumental, percussive taiko and drum hits mixed with synth bass and staccato strings, thrilling sports action montage feel, 128 BPM, instrumental only, no vocals",
+      "format": "mp3",
+      "bitrate": 256000,
+      "sample_rate": 44100,
+      "output_file": "bgm_part4.mp3"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "requests": [
+    {
+      "prompt": "Long upbeat sports electronic instrumental background music for a 6 minute badminton highlight reel. Driving punchy drums, bright plucky synths, building layers that keep evolving, triumphant triumphant sections, energetic and victorious, 120 BPM, instrumental only, no vocals, suitable as continuous background music under sports footage",
+      "format": "mp3",
+      "bitrate": 256000,
+      "sample_rate": 44100,
+      "output_file": "badminton_bgm_long.mp3"
+    },
+    {
+      "prompt": "Upbeat pop instrumental with claps and bright marimba for a sports club highlight video. Feel good, celebratory, modern clean mix, steady 118 BPM groove, instrumental, no vocals",
+      "format": "mp3",
+      "bitrate": 256000,
+      "sample_rate": 44100,
+      "output_file": "badminton_bgm_pop.mp3"
+    }
+  ]
+}

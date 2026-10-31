@@ -1,0 +1,69 @@
+# ---------- 中间产物(可由 pipeline.py 完全重新生成) ----------
+work/
+*.motion.csv
+*.audio.csv
+*.hits.json
+*.out.json
+*.occl.json
+*.skin.json
+*.skin2.json
+*.highlights.json
+
+# 选段结果要入库(可追溯每次剪辑的选取),白名单优先
+!config/select/*.v5.json
+!config/select/*.hits.json
+
+# v2/v3/v4 是历史迭代结果,仅保留 v5
+*.v2.json
+*.v3.json
+*.v4.json
+
+# ---------- 成片产物 ----------
+output/master/
+output/wechat/
+*.mp4
+!assets/*.mp3
+
+# ---------- 抽帧 / 联系表 ----------
+*.jpg.frames/
+*.jpg.p/
+*.jpg.r/
+*.jpg.rr/
+*.jpg.f/
+*.jpg.d/
+*.jpg.r/
+pool_*.jpg
+sheet_*.jpg
+round_*.jpg
+final_*.jpg
+verify_*.jpg
+v6_*.jpg
+v4_*.jpg
+wx_check*.jpg
+chk_*.jpg
+cmp_*.jpg
+probe.png
+
+# ---------- 临时/实验 ----------
+enc_test*/
+tmpocc/
+exp_*.mp4
+exp_*.txt
+smooth_test.mp4
+last_send.json
+last_img.json
+ctx_token*.json
+
+# ---------- Python ----------
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+
+# ---------- 编辑器 / 系统 ----------
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp

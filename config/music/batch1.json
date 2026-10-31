@@ -1,0 +1,11 @@
+{
+  "requests": [
+    {
+      "prompt": "Energetic upbeat sports electronic instrumental for a badminton highlight reel. Driving punchy drums, bright plucky synths, rising builds, triumphant drop, clean modern production, 120 BPM, instrumental only, no vocals, upbeat and victorious mood",
+      "format": "mp3",
+      "bitrate": 256000,
+      "sample_rate": 44100,
+      "output_file": "badminton_bgm.mp3"
+    }
+  ]
+}

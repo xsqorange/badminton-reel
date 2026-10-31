@@ -1,0 +1,74 @@
+# 羽毛球集锦剪辑 · 统一配置
+# 迁移时只需改本文件。所有路径支持相对路径(相对项目根)或绝对路径。
+
+# ---------- 素材 ----------
+source_dir: "D:/羽毛球视频/俱乐部日常活动/10月31日"
+
+# 每个场次一条。name 决定输出文件名;key 用于中间产物命名。
+clips:
+  - key: m3
+    name: "3号场_龙泽_羽毛球集锦"
+    file: "20261031_龙泽_3号场_7点.mp4"
+  - key: m2
+    name: "2号场_龙泽_羽毛球集锦"
+    file: "20261031_龙泽_2号场_8点.mp4"
+
+# ---------- 分析参数 ----------
+analysis:
+  # 运动能量采样帧率(降到 5fps 是为了把 115 分钟的运算量压到可接受)
+  motion_sample_fps: 5
+  # 击球瞬态检测
+  hit_min_gap: 0.16        # 两次击球最小间隔(秒)
+  rally_max_gap: 1.6       # 超过此间隔视为不同回合(秒)
+  min_shots: 4             # 一个回合至少几拍才算"多拍对抗"
+
+# ---------- 选段参数 ----------
+select:
+  target_seconds: 330      # 每条成片的目标时长(6 分钟上限内留余量)
+  speed: 1.1               # 统一变速倍率
+  # 回合边界余量:发球常因太轻被瞬态检测漏掉,需固定回溯
+  min_lead: 0.9            # 起点至少回溯 0.9s(覆盖抛球+发球)
+  min_tail: 1.2            # 终点至少延伸 1.2s(覆盖得分反应)
+  max_lead: 1.4            # 起点最多回溯(超出说明前面不是静止)
+  max_tail: 2.4
+  min_gap_between: 2.0     # 两个片段在源时间轴上的最小间隔(秒)
+
+# ---------- 编码参数 ----------
+encode:
+  fps: 60
+  # ⚠️ -maxrate/-bufsize 必须给!
+  # NVENC 的 VBR 模式下 -b:v 0 = 无码率上限,配合 -cq 会让码率失控
+  # (实测 -cq 17 -b:v 0 → 39Mbps,源素材只有 12Mbps)
+  # 加了 maxrate 后 cq22/24/26 在 100% 像素对比下肉眼无差异
+  cq: 22
+  maxrate: "12000k"
+  bufsize: "24000k"
+  preset: "p5"
+  tune: "hq"
+  pix_fmt: "yuv420p"
+  gop: 120                 # 2 秒一个 IDR
+
+# ---------- 微信发送版(可选产出) ----------
+wechat:
+  enabled: true
+  cq: 26
+  maxrate: "1800k"
+  bufsize: "3600k"
+  # 目标体积 ~82MB,iLink CDN 对大文件不友好
+
+# ---------- 输出 ----------
+output:
+  master_dir: "output/master"
+  wechat_dir: "output/wechat"
+  work_dir: "work"
+
+# ---------- 音乐 ----------
+music:
+  # 生成的 BGM 片段 prompt 放在 config/music/batch*.json
+  # 这里只记录最终配乐床的位置(已生成,进版本库)
+  bed_file: "assets/bgm_bed.mp3"
+  bed_seconds: 360
+  volume: 0.8              # 背景乐压低,不盖过画面
+  limiter: 0.95            # 防削波
+  fade_in: 2
+  fade_out: 3
