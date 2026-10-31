@@ -4,24 +4,28 @@
 badminton-reel/
 ├── README.md                  # 方案总纲:原理、效果、参数取舍
 ├── pipeline.py                # 单一入口:一条命令跑完整条流程
-├── config.yaml                # 唯一配置源(素材路径/参数/输出)
 ├── requirements.txt           # Python 依赖
 ├── .gitignore                 # 排除中间产物与成片
 │
 ├── src/                       # 管线核心(按执行顺序)
+│   ├── reelconf.py            # 配置层:加载/合并/校验/覆盖(共用模块)
 │   ├── probe_highlights.py    # ① 运动能量 + 音频 RMS 提取
 │   ├── detect_hits.py         # ② 击球瞬态检测 → 回合聚类
 │   ├── select_v5.py           # ③ 回合选段 + 不确定回合剔除
 │   ├── build_v4.py            # ④ 切片 + concat 拼接(两阶段)
 │   ├── make_bgm_bed.py        # ⑤ 多段 BGM 拼接 + 循环铺满
 │   ├── mix.py                 # ⑥ 混音
-│   └── ilink_client.py        # ⑦ iLink 微信通道协议客户端
+│   ├── press_wechat.py        # ⑦ 微信版压制
+│   └── ilink_client.py        # ⑧ iLink 微信通道协议客户端
 │
 ├── tools/                     # 辅助工具(非主干,按需调用)
 │   ├── qc.py                  # 画质质检:黑帧/冻结/静音/音量
 │   ├── qc_smooth.py           # 时间戳质检:帧间隔统计
 │   ├── exp_stutter.py         # 流畅度质检:静止帧/运动突变点
 │   ├── verify_speed.py        # 变速倍率核验
+│   ├── verify_equivalence.py  # 等价性核验:重跑分析阶段 vs 归档基线
+│   ├── make_smoke_fixture.py  # 生成合成素材 + 小 profile(10 秒冒烟测试)
+│   ├── sync_deliver.py        # 成片交付到素材目录
 │   ├── verify_reel.py         # 成片抽帧联系表(视觉核验)
 │   ├── round_sheet.py         # 回合首/中/末三帧联系表(完整性核验)
 │   ├── pool_sheet.py          # 候选池联系表
@@ -36,11 +40,16 @@ badminton-reel/
 │   └── 踩坑记录.md            # 全部失败尝试(含被否决的方案)
 │
 ├── config/                    # 配置文件
+│   ├── base.yaml              # ★ 参数基线:唯一配置源(素材/阈值/编码/输出)
+│   ├── profiles/              # 场景档案(只写差异,叠加在 base 之上)
+│   │   ├── README.md          #   怎么新增一个 profile
+│   │   ├── short-60s.yaml     #   竖屏 60 秒短视频
+│   │   └── rehearsal.yaml     #   快速试跑
 │   ├── music/                 # BGM 生成 prompt
 │   │   ├── batch1.json
 │   │   ├── batch2.json
 │   │   └── batch3.json
-│   └── select/                # 各版本选段结果(供追溯)
+│   └── select/                # 各版本选段结果(供追溯 / 等价性基线)
 │       ├── m2.v5.json
 │       └── m3.v5.json
 │
@@ -52,7 +61,8 @@ badminton-reel/
 │   └── wechat/                # 微信版 ~82MB
 │
 └── work/                      # 中间产物(进 .gitignore,可全删重跑)
-    ├── analysis/              # CSV 曲线 / 击球数据 / 候选帧
+    ├── analysis/              # CSV 曲线 / 击球数据 / 选段结果
+    ├── config.resolved.json   # 本次运行生效的配置快照(可追溯)
     ├── sheets/                # 联系表图片
     └── build/                 # 切片临时文件
 ```
@@ -69,19 +79,35 @@ badminton-reel/
 > 中间产物一度累积到 **28 GB**(切片临时文件占绝大部分)。
 > 全部可由 `pipeline.py` 从原始素材重新生成,因此不入版本库。
 
+## 配置体系
+
+参数只有一处来源:`config/base.yaml`。
+
+```
+config/base.yaml  <  --profile <名字>  <  --set key=value
+```
+
+- `src/reelconf.py` 负责加载、合并、校验、路径解析
+- 每个阶段脚本都接受 `--config / --profile / --set`,可单独运行
+- `pipeline.py` 解析一次配置并落一份 `work/config.resolved.json` 快照,各阶段共用
+- 配置在开工前校验:缺项或类型错会立刻报出具体路径
+
+新增参数只需两步:在 `base.yaml` 加一行 → 代码里 `cfg.at("section.key")` 读它。
+换一套输出规格(时长/画幅/帧率/码率)只需加一个 profile,不用改代码。
+
 ## 迁移方式
 
-整个目录自包含,不含绝对路径依赖(路径全在 `config.yaml`):
+整个目录自包含,不含绝对路径依赖(路径全在 `config/base.yaml`):
 
 ```bash
 # 拷贝
 cp -r badminton-reel /new/path/
 
 # 改配置
-vim config.yaml   # 改 source_dir / 输出目录
+vim config/base.yaml   # 改 source_dir / 输出目录
 
 # 重跑
-python pipeline.py --config config.yaml
+python pipeline.py
 ```
 
 ## 版本

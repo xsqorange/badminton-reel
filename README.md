@@ -114,7 +114,7 @@ v5 的做法:音频 RMS 减去 5s 滑动均值(消除慢漂移)得到相对能�
 
 ```bash
 # 1. 改配置(唯一需要改的文件)
-vim config.yaml       # 改 source_dir / clips
+vim config/base.yaml     # 改 source_dir / clips / 各种参数
 
 # 2. 跑完整流程
 python pipeline.py
@@ -141,7 +141,54 @@ pip install -r requirements.txt
 
 ---
 
-## 四、质检
+## 四、配置体系(唯一参数源)
+
+所有数值参数都集中在 `config/base.yaml`,**Python 代码里不再有魔数**。
+生效顺序(后者覆盖前者):
+
+```
+config/base.yaml  <  --profile <名字>(可重复)  <  --set key=value(可重复)
+```
+
+| 层 | 作用 | 例子 |
+|---|---|---|
+| `config/base.yaml` | 全项目参数基线,带参数取舍的理由注释 | 素材路径、检测阈值、选段权重、编码参数 |
+| `config/profiles/*.yaml` | 场景档案,只写差异 | `short-60s` 竖屏 60 秒版、`rehearsal` 快速试跑 |
+| `--set` | 临时改单个值试参数,不动文件 | `--set encode.cq=24` |
+
+```bash
+# 看当前生效的完整配置
+python src/reelconf.py
+python src/reelconf.py --profile short-60s
+
+# 换一套输出规格,不动代码、不动 base
+python pipeline.py --profile short-60s
+
+# 新增素材:写一个 profile 即可
+#   config/profiles/club-2026-11-07.yaml  ->  source_dir + clips
+python pipeline.py --profile club-2026-11-07
+```
+
+新增一个参数只需要两步:在 `base.yaml` 里加一行 → 在代码里用 `cfg.at("section.key")` 读它。
+配置在开工前会被校验(缺项/类型错会直接报错并列出具体路径),
+不会再像以前那样跑 10 分钟后才 `KeyError`。
+
+各脚本也能单独跑,都吃同一套配置:
+
+```bash
+python src/select_v5.py hits.json motion.csv audio.csv out.json --profile short-60s
+```
+
+改动管线后想快速确认链路还通,用合成素材跑一遍(约 10 秒):
+
+```bash
+python tools/make_smoke_fixture.py
+python pipeline.py --profile work/smoke-profile.yaml
+```
+
+---
+
+## 五、质检
 
 ```bash
 python tools/qc.py output/master/*.mp4          # 黑帧/冻结/静音/音量
@@ -165,17 +212,17 @@ python tools/verify_speed.py                    # 变速倍率核验
 
 ---
 
-## 五、目录结构
+## 六、目录结构
 
 见 `PROJECT_STRUCTURE.md`。要点:
 
-- `src/` 管��核心脚本,`tools/` 辅助工具,`config/` 配置,`docs/` 文档
+- `src/` 管核心脚本,`tools/` 辅助工具,`config/` 配置,`docs/` 文档
 - `output/` 成片(不进 git),`work/` 中间产物(不进 git,可全删重跑)
-- 路径全部集中在 `config.yaml`,迁移只需改这一个文件
+- 路径全部集中在 `config/base.yaml`,迁移只需改这一个文件
 
 ---
 
-## 六、已知限制
+## 七、已知限制
 
 - **依赖 NVIDIA 显卡**:NVENC 硬编是性能关键,无显卡时回退到 libx264(慢很多)
 - **发球可能漏检**:极轻的发球声检测不到,靠固定 0.9s 回溯兜底
@@ -184,7 +231,7 @@ python tools/verify_speed.py                    # 变速倍率核验
 
 ---
 
-## 七、文档
+## 八、文档
 
 - `docs/操作流程.md` —— 完整流程、每步参数理由
 - `docs/踩坑记录.md` —— 所有失败尝试(含被否决的方案)

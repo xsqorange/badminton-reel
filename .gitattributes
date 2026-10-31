@@ -1,0 +1,9 @@
+# 统一换行符:仓库内存 LF,检出时按平台转换
+* text=auto
+
+# 二进制文件不做换行转换
+*.mp3 binary
+*.mp4 binary
+*.png binary
+*.jpg binary
+*.wav binary

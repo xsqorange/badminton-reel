@@ -1,0 +1,215 @@
+# ================================================================
+# 羽毛球集锦剪辑 · 参数基线 (base)
+# ================================================================
+# 生效顺序(后者覆盖前者):
+#
+#     config/base.yaml  <  --profile <名字>  <  --set key=value
+#
+#   · --profile 可重复,按出现顺序叠加(见 config/profiles/)
+#   · --set   优先级最高,用于临时试参数,不改文件
+#
+# 路径约定:相对路径按项目根解析,也可写绝对路径。
+# 所有数值参数都在这里;Python 代码里不应再出现魔数。
+# ================================================================
+
+
+# ---------- 素材 ----------
+source_dir: "D:/羽毛球视频/俱乐部日常活动/10月31日"
+
+# 每个场次一条。name 决定输出文件名;key 用于中间产物命名。
+clips:
+  - key: m3
+    name: "3号场_龙泽_羽毛球集锦"
+    file: "20261031_龙泽_3号场_7点.mp4"
+  - key: m2
+    name: "2号场_龙泽_羽毛球集锦"
+    file: "20261031_龙泽_2号场_8点.mp4"
+
+
+# ---------- 分析参数 ----------
+analysis:
+  # 运动能量采样帧率(降到 5fps 是为了把 115 分钟的运算量压到可接受)
+  motion_sample_fps: 5
+  # 运动能量分析前的缩放尺寸(越小越快,足够反映整体运动量)
+  motion_scale: "320:180"
+  # 音频 RMS 统计的重置帧数(astats=reset=N)
+  audio_stats_reset: 10
+  # 击球瞬态检测用的音频采样率
+  audio_sample_rate: 48000
+  # 短时能量包络窗长(毫秒)
+  hit_env_window_ms: 10
+  # 击球检测绝对阈值(dB)。低于此值直接不算击球
+  hit_thresh_db: -32.0
+  # 自适应阈值的局部中位数窗长(帧,每帧 hit_env_window_ms)
+  hit_median_window: 51
+  # 自适应阈值 = 局部中位数 + 该偏移(dB),用于适应场地嘈杂
+  hit_median_offset_db: 8.0
+  # 上升沿判定:一阶差分超过该值(dB)才算冲击起点
+  hit_rise_db: 6.0
+  # 两次击球最小间隔(秒),小于则合并保留能量更高的那个
+  hit_min_gap: 0.16
+  # 一个回合至少几拍才纳入聚类结果
+  hit_min_rally_shots: 2
+  # 超过此间隔视为不同回合(秒)
+  rally_max_gap: 1.6
+  # 一个回合至少几拍才算"多拍对抗"(选段阶段过滤)
+  min_shots: 4
+
+
+# ---------- 选段参数 ----------
+select:
+  # 每条成片的目标时长(秒)(6 分钟上限内留余量)
+  target_seconds: 330
+  # 统一变速倍率
+  speed: 1.1
+
+  # 回合边界余量:发球常因太轻被瞬态检测漏掉,需固定回溯
+  min_lead: 0.9            # 起点至少回溯 0.9s(覆盖抛球+发球)
+  min_tail: 1.2            # 终点至少延伸 1.2s(覆盖得分反应)
+  max_lead: 1.4            # 起点最多回溯(超出说明前面不是静止)
+  max_tail: 2.4            # 终点最多延伸
+  min_gap_between: 2.0     # 两个片段在源时间轴上的最小间隔(秒)
+
+  # 音频重采样网格(秒)。相对能量都在这个网格上计算
+  bucket_seconds: 0.2
+  # 局部基线滑动窗(秒),用于消除能量慢漂移
+  baseline_window_seconds: 5.0
+  # 局部基线取样半径(网格数)
+  local_base_half_buckets: 15
+  # 运动能量取样窗(秒),取窗内最大值
+  motion_window_seconds: 0.4
+  # 运动能量平滑窗(采样点数)
+  motion_avg_window: 5
+  # 边界回溯/延伸的最大扫描时长(秒)
+  boundary_scan_max_seconds: 2.5
+
+  # 起点判定:相对能量回升超过基线 + 该值(dB)即认为活动重新开始
+  lead_resume_db: 1.0
+  # 终点判定:相对能量跌破基线 - 该值(dB)即认为收尾
+  tail_fall_db: 2.0
+  # 边界不确定判定:前后能量变化都小于该值(秒)则移除回合
+  boundary_min_gap: 0.2
+
+  # 得分佐证:末拍后该时间窗内的相对能量峰值
+  score_peak_start: 0.2
+  score_peak_end: 2.2
+  # 峰值需超过回合内击球基准的该倍数
+  score_peak_ratio: 1.12
+  # 且峰值需超过该下限(归一化后)
+  score_peak_floor: 0.25
+
+  # 片段时长至少要比"首拍→末拍"多出该秒数
+  min_segment_extra: 1.0
+
+  # 回合评分权重(和为 1.0)
+  weight_shots: 0.40       # 拍数(对数饱和)
+  weight_regularity: 0.25  # 连贯性 1/(1+间隔标准差)
+  weight_duration: 0.20    # 时长适宜度
+  weight_motion: 0.15      # 运动强度
+
+  # 拍数权重:shots/cap 后封顶
+  shots_score_cap: 12.0
+  shots_score_max: 1.6
+  # 时长适宜度分档(秒):<tier1 / <=tier2 / <=tier3 / 更长
+  duration_tier1: 4
+  duration_tier2: 18
+  duration_tier3: 28
+  duration_score_tier1: 0.3
+  duration_score_tier2: 1.0
+  duration_score_tier3: 0.75
+  duration_score_tier4: 0.5
+
+
+# ---------- 构建参数 ----------
+build:
+  # 切片阶段重新挑片段时的最小间隔(秒)
+  # 注:与 select.min_gap_between 不同 —— 选段用 2.0s,构建用 1.2s
+  min_gap_between: 1.2
+  # 切片时在选段边界外各多留的余量(秒)
+  cut_padding: 0.12
+
+
+# ---------- 编码参数 ----------
+encode:
+  fps: 60
+  scale: "1920:1080"
+  scale_flags: "lanczos"
+  # fps 滤镜参数:基于时间戳等距重采样,消除源 VFR 抖动
+  fps_round: "near"
+  fps_start_time: 0
+  vsync: "cfr"
+
+  preset: "p5"
+  tune: "hq"
+  rc: "vbr"
+  # ⚠️ -maxrate/-bufsize 必须给!
+  # NVENC 的 VBR 模式下 -b:v 0 = 无码率上限,配合 -cq 会让码率失控
+  # (实测 -cq 17 -b:v 0 → 39Mbps,源素材只有 12Mbps)
+  # 加了 maxrate 后 cq22/24/26 在 100% 像素对比下肉眼无差异
+  cq: 22
+  b_v: "0"
+  maxrate: "12000k"
+  bufsize: "24000k"
+  pix_fmt: "yuv420p"
+  gop: 120                 # 2 秒一个 IDR
+  movflags: "+faststart"
+
+  # 无 NVIDIA 显卡时的 libx264 回退参数
+  x264_preset: "veryfast"
+  x264_crf: 22
+
+
+# ---------- 混音参数 ----------
+mix:
+  audio_codec: "aac"
+  audio_bitrate: "256k"
+  audio_sample_rate: "48000"
+
+
+# ---------- 音乐 ----------
+music:
+  # 生成的 BGM 片段 prompt 放在 config/music/batch*.json
+  # 这里只记录最终配乐床的位置(已生成,进版本库)
+  bed_file: "assets/bgm_bed.mp3"
+  bed_seconds: 360          # 配乐床目标时长(秒)
+  volume: 0.8               # 背景乐压低,不盖过画面
+  limiter: 0.95             # 防削波
+  fade_in: 2                # 淡入(秒)
+  fade_out: 3               # 淡出(秒)
+
+  # 配乐床制作(make_bgm_bed.py)
+  bed_crossfade: 1.2        # 多段拼接时的交叉淡化
+  bed_loop_crossfade: 1.5   # 循环铺满时的接缝淡化
+  bed_fade_in: 1.5
+  bed_fade_out: 2.5
+  bed_limiter: 0.95
+  bed_bitrate: "256k"
+
+
+# ---------- 微信发送版(可选产出) ----------
+wechat:
+  enabled: true
+  cq: 26
+  maxrate: "1800k"
+  bufsize: "3600k"
+  # 目标体积 ~82MB,iLink CDN 对大文件不友好
+  # preset/tune/pix_fmt/g 未列出时继承 encode 段的同名项
+
+
+# ---------- 输出 ----------
+output:
+  master_dir: "output/master"
+  wechat_dir: "output/wechat"
+  work_dir: "work"
+  # work 下的子目录
+  analysis_subdir: "analysis"
+  build_subdir: "build"
+  sheets_subdir: "sheets"
+
+
+# ---------- iLink 微信通道 ----------
+ilink:
+  base_url: "https://ilinkai.weixin.qq.com/"
+  cdn_base: "https://novac2c.cdn.weixin.qq.com/c2c"
+  channel_version: "2.4.6"
+  app_id: "bot"

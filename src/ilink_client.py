@@ -18,6 +18,8 @@ iLink API 客户端 —— 复刻桌面端 SDK 的协议,用于主动向微信�
 import json, base64, hashlib, secrets, sys, os, time
 import urllib.request, urllib.error, urllib.parse
 
+# 通道参数。默认值与 config/base.yaml 的 ilink 段一致,
+# configure() / configure_from_file() 可从配置文件覆盖。
 BASE = "https://ilinkai.weixin.qq.com/"
 CDN_BASE = "https://novac2c.cdn.weixin.qq.com/c2c"
 CHANNEL_VERSION = "2.4.6"
@@ -28,6 +30,23 @@ def encode_version(v):
     mj, mn, pt = [int(x) for x in v.split(".")]
     return ((mj & 0xff) << 16) | ((mn & 0xff) << 8) | (pt & 0xff)
 APP_CLIENT_VERSION = str(encode_version(CHANNEL_VERSION))
+
+def configure(cfg):
+    """用配置覆盖通道参数。cfg 可以是 reelconf.Config 或普通 dict。"""
+    global BASE, CDN_BASE, CHANNEL_VERSION, APP_ID, BOT_AGENT, APP_CLIENT_VERSION
+    il = cfg.section("ilink") if hasattr(cfg, "section") else (cfg.get("ilink") or {})
+    BASE = il.get("base_url", BASE)
+    CDN_BASE = il.get("cdn_base", CDN_BASE)
+    CHANNEL_VERSION = il.get("channel_version", CHANNEL_VERSION)
+    APP_ID = il.get("app_id", APP_ID)
+    BOT_AGENT = il.get("bot_agent", f"Mavis/{CHANNEL_VERSION}")
+    APP_CLIENT_VERSION = str(encode_version(CHANNEL_VERSION))
+
+def configure_from_file(config_path=None, profiles=()):
+    """从 config/base.yaml(+ profile)读取通道参数。"""
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    from reelconf import load_config
+    configure(load_config(config_path, profiles=profiles))
 
 MessageType_BOT = 2
 MessageState_FINISH = 2
