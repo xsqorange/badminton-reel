@@ -16,6 +16,15 @@
   改为从配置解析
 - 新增 `tools/verify_equivalence.py`:重跑分析阶段并与 `config/select/` 归档基线逐字段比对
 
+## 安全
+- **微信通道凭据与会话 ID 不再写死在代码里**。
+  `src/ilink_client.py` 新增 `bot_token()` / `chat_id()`,按
+  `环境变量 > 通道配置文件 > 报错` 的顺序解析:
+  - `WX_BOT_TOKEN` / `WX_CHAT_ID` / `WX_CHANNEL_CFG`
+  - 配置文件字段 `botToken` / `ownerSenderId` / `chatId`
+  拿不到时打印明确的修复指引并退出,不再静默失败。
+- `tools/wx_*.py` 里原先硬编码的会话 ID 与本机绝对路径全部改为运行时解析。
+
 ## 修复
 - **ffmpeg 滤镜路径含冒号**:`metadata=print:file=D:/...` 在 Windows 上被当成选项分隔符,
   报 `No option name near '/work/...'`。改为把 ffmpeg 工作目录设成目标目录、`file=` 只写文件名

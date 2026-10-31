@@ -5,15 +5,12 @@
 桌面端 monitor 用的是推进后的游标,不受影响。
 只取 context_token,不使用消息内容。
 """
-import sys, os, re, json
+import sys, os, json
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "src"))
 sys.stdout.reconfigure(encoding='utf-8', errors='replace')
 import ilink_client as ic
 
-CFG = r"C:\Users\Admin\.minimax\wechat-channel.yaml"
-txt = open(CFG, encoding="utf-8").read()
-token = re.search(r"botToken:\s*(\S+)", txt).group(1).strip()
-chat_id = "<REDACTED-CHAT-ID>"
+token = ic.bot_token()
 
 # 空游标 -> 服务端可能重放最近的消息
 body = {
@@ -41,8 +38,10 @@ if found:
     print("\nFOUND context tokens:")
     for f, t, ct in found:
         print(f"  from={f} to={t} ctx={ct[:60]}...")
+    out_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "work")
+    os.makedirs(out_dir, exist_ok=True)
     json.dump([{"from": f, "to": t, "ctx": ct} for f, t, ct in found],
-              open(r"D:\work\minimax-bot\analysis\ctx_tokens.json", "w", encoding="utf-8"),
+              open(os.path.join(out_dir, "ctx_tokens.json"), "w", encoding="utf-8"),
               ensure_ascii=False, indent=2)
     print("saved -> ctx_tokens.json")
 else:

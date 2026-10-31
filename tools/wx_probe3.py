@@ -2,15 +2,13 @@
 探测 sendmessage 对 context_token 的要求。
 用空 item_list(不发送任何可见内容),看服务端返回什么错误码。
 """
-import sys, os, re, json
+import sys, os
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "src"))
 sys.stdout.reconfigure(encoding='utf-8', errors='replace')
 import ilink_client as ic
 
-CFG = r"C:\Users\Admin\.minimax\wechat-channel.yaml"
-txt = open(CFG, encoding="utf-8").read()
-token = re.search(r"botToken:\s*(\S+)", txt).group(1).strip()
-chat_id = "<REDACTED-CHAT-ID>"
+token = ic.bot_token()
+chat_id = ic.chat_id()
 
 # 空 item_list + 空 context_token:不产生可见消息,只看校验反馈
 for label, ct in (("empty-ctx", ""), ("null-ctx", None)):

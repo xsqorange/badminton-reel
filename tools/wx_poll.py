@@ -2,13 +2,14 @@
 用刚拿到的游标持续轮询,等待一条新消息以获取 context_token。
 注意:桌面端 monitor 也持有自己的游标,两边各自消费。
 """
-import sys, os, re, json, time
+import sys, os, json, time
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "src"))
 sys.stdout.reconfigure(encoding='utf-8', errors='replace')
 import ilink_client as ic
 
-CFG = r"C:\Users\Admin\.minimax\wechat-channel.yaml"
-token = re.search(r"botToken:\s*(\S+)", open(CFG, encoding="utf-8").read()).group(1).strip()
+token = ic.bot_token()
+work_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "work")
+os.makedirs(work_dir, exist_ok=True)
 
 buf = sys.argv[1] if len(sys.argv) > 1 else ""
 rounds = int(sys.argv[2]) if len(sys.argv) > 2 else 3
@@ -32,7 +33,7 @@ for i in range(rounds):
               f"ctx_len={len(ct) if ct else 0} type={m.get('message_type')} state={m.get('message_state')}")
         if ct:
             json.dump({"from": m.get("from_user_id"), "to": m.get("to_user_id"), "ctx": ct},
-                      open(r"D:\work\minimax-bot\analysis\ctx_token.json","w",encoding="utf-8"),
+                      open(os.path.join(work_dir, "ctx_token.json"), "w", encoding="utf-8"),
                       ensure_ascii=False, indent=2)
             print("   >>> SAVED context_token")
             sys.exit(0)

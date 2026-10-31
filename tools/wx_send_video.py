@@ -13,7 +13,7 @@
     不传 video 时默认取配置里第一场的母版成片;
     不传 caption 时按选段结果自动生成(时长 / 回合数 / 倍速 / 帧率)。
 """
-import argparse, base64, json, os, re, secrets, sys, time
+import argparse, base64, json, os, secrets, sys, time
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, "src"))
@@ -22,9 +22,8 @@ sys.stdout.reconfigure(encoding='utf-8', errors='replace')
 import ilink_client as ic
 from reelconf import add_config_args, config_from_args, resolve_path
 
-# 通道凭据不在项目内(是本机运行时凭据),可用环境变量覆盖
-CFG = os.environ.get("WX_CHANNEL_CFG", r"C:\Users\Admin\.minimax\wechat-channel.yaml")
-CHAT_ID = os.environ.get("WX_CHAT_ID", "<REDACTED-CHAT-ID>")
+# 通道凭据与会话 ID 不在项目内(是本机运行时凭据),由 ic.bot_token() / ic.chat_id()
+# 从环境变量或通道配置文件解析。
 
 
 def default_caption(cfg, clip):
@@ -60,8 +59,8 @@ def main():
     cfg = config_from_args(args)
     ic.configure(cfg)
 
-    token = re.search(r"botToken:\s*(\S+)", open(CFG, encoding="utf-8").read()).group(1).strip()
-    chat_id = CHAT_ID
+    token = ic.bot_token()
+    chat_id = ic.chat_id()
 
     clip = cfg["clips"][0]
     master_dir = resolve_path(cfg.at("output.master_dir"), ROOT)

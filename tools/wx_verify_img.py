@@ -2,14 +2,14 @@
 用图片的 CDN 参数回查 —— 若能取回并解密成合法 PNG,
 则证明整个链路(上传->入媒体库->可取回)完全正常。
 """
-import sys, os, re, json, base64, urllib.request, urllib.parse, subprocess, tempfile
+import sys, os, json, base64, urllib.request, urllib.parse, subprocess, tempfile
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "src"))
 sys.stdout.reconfigure(encoding='utf-8', errors='replace')
 import ilink_client as ic
 
-CFG = r"C:\Users\Admin\.minimax\wechat-channel.yaml"
-token = re.search(r"botToken:\s*(\S+)", open(CFG, encoding="utf-8").read()).group(1).strip()
-d = json.load(open(r"D:\work\minimax-bot\analysis\last_img.json", encoding="utf-8"))
+token = ic.bot_token()
+work_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "work")
+d = json.load(open(os.path.join(work_dir, "last_img.json"), encoding="utf-8"))
 param = d["download_param"]; aes_b64 = d["aes_key_b64"]; filekey = d["filekey"]
 
 variants = [

@@ -15,7 +15,7 @@ iLink API 客户端 —— 复刻桌面端 SDK 的协议,用于主动向微信�
   消息体    = {msg:{from_user_id:'', to_user_id, client_id, message_type:2,
                     message_state:2, item_list:[...], context_token}, base_info:{...}}
 """
-import json, base64, hashlib, secrets, sys, os, time
+import json, base64, hashlib, re, secrets, sys, os, time
 import urllib.request, urllib.error, urllib.parse
 
 # 通道参数。默认值与 config/base.yaml 的 ilink 段一致,
@@ -47,6 +47,89 @@ def configure_from_file(config_path=None, profiles=()):
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
     from reelconf import load_config
     configure(load_config(config_path, profiles=profiles))
+
+
+# ---------- 凭据 / 会话 ID 解析 ----------
+
+# 通道凭据是本机运行时凭据,不进版本库。
+# 查找顺序:环境变量 > 通道配置文件 > 报错。
+DEFAULT_CHANNEL_CFG = os.path.expanduser(r"~\.minimax\wechat-channel.yaml")
+DEFAULT_OWNER_CFG = os.path.expanduser(r"~\.minimax\channel-owner.yaml")
+ENV_CHANNEL_CFG = "WX_CHANNEL_CFG"
+ENV_BOT_TOKEN = "WX_BOT_TOKEN"
+ENV_CHAT_ID = "WX_CHAT_ID"
+
+
+def channel_cfg_path():
+    """返回通道配置文件路径(环境变量优先)。"""
+    return os.environ.get(ENV_CHANNEL_CFG) or DEFAULT_CHANNEL_CFG
+
+
+def _candidate_cfg_paths():
+    """按优先级列出要扫描的配置文件。"""
+    return [channel_cfg_path(), DEFAULT_OWNER_CFG]
+
+
+def _read_channel_cfg():
+    path = channel_cfg_path()
+    if not os.path.exists(path):
+        return "", path
+    with open(path, "r", encoding="utf-8") as f:
+        return f.read(), path
+
+
+def _grep_cfg(keys):
+    """在候选配置文件里找第一个匹配项。返回 (值, 来源文件) 或 (None, None)。"""
+    for path in _candidate_cfg_paths():
+        if not os.path.exists(path):
+            continue
+        with open(path, "r", encoding="utf-8") as f:
+            txt = f.read()
+        for key in keys:
+            m = re.search(rf"{key}\s*:\s*(\S+)", txt)
+            if m:
+                return m.group(1).strip(), path
+    return None, None
+
+
+def bot_token():
+    """取 botToken。
+
+    优先级:环境变量 WX_BOT_TOKEN > 通道配置文件里的 botToken。
+    找不到时抛出带修复指引的异常,而不是让调用方在别处崩。
+    """
+    tok = os.environ.get(ENV_BOT_TOKEN)
+    if tok:
+        return tok.strip()
+    val, path = _grep_cfg(("botToken",))
+    if val:
+        return val
+    raise SystemExit(
+        f"未找到 botToken。\n"
+        f"  方式 1:设置环境变量 {ENV_BOT_TOKEN}\n"
+        f"  方式 2:在 {channel_cfg_path()} 里配置 botToken\n"
+        f"  方式 3:设置 {ENV_CHANNEL_CFG} 指向别的通道配置文件"
+    )
+
+
+def chat_id():
+    """取会话 ID(ownerSenderId / chatId)。
+
+    优先级:环境变量 WX_CHAT_ID > 通道配置文件 / channel-owner.yaml 里的
+    ownerSenderId / chatId。找不到时抛出带修复指引的异常。
+    """
+    cid = os.environ.get(ENV_CHAT_ID)
+    if cid:
+        return cid.strip()
+    val, path = _grep_cfg(("ownerSenderId", "chatId", "chat_id"))
+    if val:
+        return val
+    raise SystemExit(
+        f"未找到会话 ID。\n"
+        f"  方式 1:设置环境变量 {ENV_CHAT_ID}=<chatId>\n"
+        f"  方式 2:在 {channel_cfg_path()} 或 {DEFAULT_OWNER_CFG} 里配置 ownerSenderId / chatId\n"
+        f"  (群聊或文件传输助手的 chatId 需要另行获取)"
+    )
 
 MessageType_BOT = 2
 MessageState_FINISH = 2

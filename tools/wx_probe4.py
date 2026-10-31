@@ -1,11 +1,10 @@
-import sys, os, re, json
+import sys, os, json
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "src"))
 sys.stdout.reconfigure(encoding='utf-8', errors='replace')
 import ilink_client as ic
 
-CFG = r"C:\Users\Admin\.minimax\wechat-channel.yaml"
-token = re.search(r"botToken:\s*(\S+)", open(CFG, encoding="utf-8").read()).group(1).strip()
-chat_id = "<REDACTED-CHAT-ID>"
+token = ic.bot_token()
+chat_id = ic.chat_id()
 
 # getconfig 的完整响应(可能含 context_token / send 权限)
 body = {"ilink_user_id": chat_id,

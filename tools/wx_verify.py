@@ -1,14 +1,14 @@
 """
 验证投递:用 CDN 参数反查视频能否被取回并解密为合法 MP4。
 """
-import sys, re, json, base64, urllib.request, urllib.parse, subprocess, tempfile, os
+import sys, json, base64, urllib.request, urllib.parse, subprocess, tempfile, os
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "src"))
 sys.stdout.reconfigure(encoding='utf-8', errors='replace')
 import ilink_client as ic
 
-CFG = r"C:\Users\Admin\.minimax\wechat-channel.yaml"
-token = re.search(r"botToken:\s*(\S+)", open(CFG, encoding="utf-8").read()).group(1).strip()
-d = json.load(open(r"D:\work\minimax-bot\analysis\last_send.json", encoding="utf-8"))
+token = ic.bot_token()
+work_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "work")
+d = json.load(open(os.path.join(work_dir, "last_send.json"), encoding="utf-8"))
 param = d["download_param"]
 aes_b64 = d["aes_key_b64"]
 filekey = d.get("filekey", "")

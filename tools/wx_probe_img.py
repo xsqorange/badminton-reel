@@ -2,18 +2,19 @@
 最终验证:用极小的图片消息测试完整投递链路。
 小文件便于回查验证(如果能取回,链路 100% 确认)。
 """
-import sys, os, re, json, base64, secrets, time
+import sys, os, json, base64, secrets, time
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "src"))
 sys.stdout.reconfigure(encoding='utf-8', errors='replace')
 import ilink_client as ic
 
-CFG = r"C:\Users\Admin\.minimax\wechat-channel.yaml"
-token = re.search(r"botToken:\s*(\S+)", open(CFG, encoding="utf-8").read()).group(1).strip()
-chat_id = "<REDACTED-CHAT-ID>"
+token = ic.bot_token()
+chat_id = ic.chat_id()
 
 # 造一个真实的小 PNG(用 ffmpeg 生成,避免手写字节出错)
 import subprocess
-png_path = r"D:\work\minimax-bot\analysis\probe.png"
+png_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "work", "probe.png")
+png_path = os.path.abspath(png_path)
+os.makedirs(os.path.dirname(png_path), exist_ok=True)
 subprocess.run(["ffmpeg","-hide_banner","-v","error","-y","-f","lavfi",
                 "-i","color=c=orange:s=64x64:d=1","-frames:v","1",png_path], check=True)
 png = open(png_path,"rb").read()
@@ -48,5 +49,5 @@ print("sendmessage(image) ->", st, resp[:300])
 
 # 立刻尝试回查
 json.dump({"download_param": dp, "aes_key_b64": base64.b64encode(aeskey).decode(),
-           "filekey": filekey}, open(r"D:\work\minimax-bot\analysis\last_img.json","w",
+           "filekey": filekey}, open(os.path.join(os.path.dirname(png_path), "last_img.json"), "w",
            encoding="utf-8"), ensure_ascii=False, indent=2)

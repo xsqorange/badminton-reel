@@ -236,3 +236,20 @@ python tools/verify_speed.py                    # 变速倍率核验
 - `docs/操作流程.md` —— 完整流程、每步参数理由
 - `docs/踩坑记录.md` —— 所有失败尝试(含被否决的方案)
 - `docs/微信通道.md` —— iLink 协议逆向笔记(发视频到微信)
+
+---
+
+## 九、凭据与隐私
+
+微信通道的凭据是**本机运行时凭据,不在版本库里**,由 `src/ilink_client.py` 解析:
+
+| 项 | 环境变量 | 配置文件字段 |
+|---|---|---|
+| 通道配置路径 | `WX_CHANNEL_CFG` | 默认 `~/.minimax/wechat-channel.yaml` |
+| botToken | `WX_BOT_TOKEN` | `botToken` |
+| 会话 ID | `WX_CHAT_ID` | `ownerSenderId` / `chatId` |
+
+环境变量优先;都拿不到时脚本打印修复指引并退出。
+
+仓库里**不含**素材原片、成片、中间产物和任何凭据:
+`output/` 与 `work/` 已被 `.gitignore` 排除,凭据与个人会话 ID 不进代码。
