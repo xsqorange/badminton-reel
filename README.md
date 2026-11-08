@@ -186,6 +186,20 @@ python tools/make_smoke_fixture.py
 python pipeline.py --profile work/smoke-profile.yaml
 ```
 
+### 单独导出某个回合
+
+文档里报的"最长 44 拍 / 28.6 秒"这类极限回合,可以剪成独立片段单独看:
+
+```bash
+python tools/export_rally.py --clip m2 --longest      # 该场最长的回合
+python tools/export_rally.py --clip m2 --shots 44      # 指定拍数
+python tools/export_rally.py --clip m2 --longest --with-bgm   # 混配乐
+```
+
+边界与主流程一致:该回合若在最终选段里就直接复用选段边界(含发球前置与得分后延),
+否则单独跑一遍 `select_v5` 取它算出的边界。
+默认 1.0x 原速并保留原声 —— 便于听清每一拍。
+
 ---
 
 ## 五、质检
@@ -212,7 +226,72 @@ python tools/verify_speed.py                    # 变速倍率核验
 
 ---
 
-## 六、目录结构
+## 六、长回合保障(≥N 拍的长回合必须进成片)
+
+长回合是集锦里最该保留的素材,但它**稀缺** —— 一个 80 分钟的场次可能一个都没有,
+所以不能靠"打分高自然就选上了",必须有一道**显式保障**。
+
+机制在 `src/select_v5.py`:
+
+1. `select.long_rally_shots` = 拍数门槛(base 是 **30**,用户原始口径);
+2. `select.long_rally_force` = 是否开启强制纳入(base 默认 `false`);
+3. 开启后,≥N 拍的回合**先于其它候选入选,且不受时长预算限制**;
+4. 同时豁免"缺得分佐证"剔除 —— 30+ 拍的长回合常以一个平淡的球收尾,
+   末拍后没有明显响动,但这恰恰是最该保留的高光。
+
+阈值**分两层**:base 保持 30 拍不动,各批次 profile 按**本批实测分布**调整。
+11月7日 3号场最初实测"最长只有 28 拍、≥30 拍 0 个",一度把阈值降到 20 拍;
+后来用标注集复测发现那是**检测器把长回合切碎造成的假象**
+(漏掉一两拍就在回合内部留下 >1.6s 空档,聚类把它切成两段),
+修正检测器参数后本批实测 **13 个 ≥30 拍回合**,全部在成片里 ⇒ 阈值保持 30 拍:
+
+```yaml
+select:
+  long_rally_force: true
+  long_rally_shots: 30
+eval:
+  long_rally_shots: 30     # 评测口径必须与选段口径一致
+```
+
+> 汇报长回合指标时**必须带上口径**(本批是 30 拍档),并给出每个长回合的
+> 源时间 / 成片位置 / 时长。用 0 个样本声称达标不成立;
+> **更不能用"检测器说没有"当作"不存在"** —— 先确认检测器没有把回合切碎。
+
+---
+
+## 七、评估集与一键回归
+
+回合识别不能只靠"看着挺准",要有 ground truth 和可回归的指标。
+
+```bash
+# 1. 生成联系表(人工核验的入口;配置里声明了几个窗口就一次跑完几个)
+python tools/annotate_rounds.py --video <src.mp4> --hits work/analysis/c3.hits.json \
+    --out-dir work/sheets/ann --profile club-2026-11-07
+
+# 2. 人工核验 → 碎片 → 合并成 ground truth(唯一写 GT 的入口,带完整性校验)
+python tools/merge_gt.py --fragments work/ann_gt/w*.json \
+    --candidates work/sheets/ann/w559.0-1200.0/candidates.json \
+    --clip c3 --source "<源文件名>" --out eval/ground_truth/c3_559-1200.json
+
+# 3. 评测:回合识别 P/R/F1 + 选段完整率 + 长回合检出/在片召回
+python tools/eval_rounds.py --gt eval/ground_truth \
+    --hits work/analysis/c3.hits.json --segments work/analysis/c3.v5.json \
+    --manifest work/build/c3.silent.mp4.segments.json \
+    --out eval/reports/c3.json --profile club-2026-11-07
+
+# 4. 算法改动后一键回归对比(任一指标下降超容差 → 退出码 1,可直接挂 CI)
+python tools/eval_rounds.py ... --compare eval/baseline/baseline.json
+```
+
+标注规范(什么算一个回合、边界怎么定、拍数怎么数、窗口怎么扩)见
+[`docs/标注规范.md`](docs/标注规范.md);评估集说明见 [`eval/README.md`](eval/README.md)。
+
+> **长回合专窗**:普通标注窗口盖不住全部长回合,必须专门加一个窗口,
+> 规则事先声明(见 `docs/标注规范.md` 第八节),否则长回合指标会是 0 个样本。
+
+---
+
+## 八、目录结构
 
 见 `PROJECT_STRUCTURE.md`。要点:
 
@@ -222,7 +301,7 @@ python tools/verify_speed.py                    # 变速倍率核验
 
 ---
 
-## 七、已知限制
+## 九、已知限制
 
 - **依赖 NVIDIA 显卡**:NVENC 硬编是性能关键,无显卡时回退到 libx264(慢很多)
 - **发球可能漏检**:极轻的发球声检测不到,靠固定 0.9s 回溯兜底
@@ -231,15 +310,17 @@ python tools/verify_speed.py                    # 变速倍率核验
 
 ---
 
-## 八、文档
+## 十、文档
 
 - `docs/操作流程.md` —— 完整流程、每步参数理由
 - `docs/踩坑记录.md` —— 所有失败尝试(含被否决的方案)
+- `docs/标注规范.md` —— 回合标注规范(评估集怎么标、标什么、窗口怎么扩)
+- `docs/执行报告.md` —— 每批素材的执行报告(改了什么、指标、还差什么)
 - `docs/微信通道.md` —— iLink 协议逆向笔记(发视频到微信)
 
 ---
 
-## 九、凭据与隐私
+## 十一、凭据与隐私
 
 微信通道的凭据是**本机运行时凭据,不在版本库里**,由 `src/ilink_client.py` 解析:
 

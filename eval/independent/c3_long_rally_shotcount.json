@@ -1,0 +1,254 @@
+{
+  "source": "20261107_龙泽_3号场.mp4",
+  "clip": "c3",
+  "window": {
+    "start": 0.0,
+    "end": 4833.3
+  },
+  "annotator": "Chief(独立核验)",
+  "method": "音频短时包络(6ms窗/2ms步) -> 局部极大值 -> 相对本段中位数>=+11dB 的强瞬态计数。该方法不依赖 src/detect_hits.py 的 rise/offset/thresh 参数, 波形图已人工核验(work/sheets/chief_check/)。注意: 强瞬态含少量「拍+球」双响, 因此为击球数上限, 实际拍数略少。",
+  "threshold_db": 11.0,
+  "calibration": {
+    "best_variant": "rise4.5/off7.0/thr-34",
+    "mae": 3.730769230769231,
+    "ratio": 1.0106275632089223,
+    "ge30_recall": 13,
+    "ge30_total": 13
+  },
+  "rallies": [
+    {
+      "id": "L00",
+      "start": 29.1,
+      "end": 67.2,
+      "shots": 39,
+      "shots_uncertain": false,
+      "method": "audio transient count, independent of detect_hits thresholds",
+      "note": "独立计数=39 强瞬态(含少量拍+球双响,故为上限); B变体报65拍; A默认参数在此区间切成6段合计29拍最长8拍"
+    },
+    {
+      "id": "L01",
+      "start": 1212.2,
+      "end": 1251.5,
+      "shots": 42,
+      "shots_uncertain": false,
+      "method": "audio transient count, independent of detect_hits thresholds",
+      "note": "独立计数=42 强瞬态(含少量拍+球双响,故为上限); B变体报61拍; A默认参数在此区间切成5段合计29拍最长17拍"
+    },
+    {
+      "id": "L02",
+      "start": 446.9,
+      "end": 483.4,
+      "shots": 46,
+      "shots_uncertain": false,
+      "method": "audio transient count, independent of detect_hits thresholds",
+      "note": "独立计数=46 强瞬态(含少量拍+球双响,故为上限); B变体报59拍; A默认参数在此区间切成6段合计30拍最长8拍"
+    },
+    {
+      "id": "L03",
+      "start": 1102.2,
+      "end": 1130.9,
+      "shots": 34,
+      "shots_uncertain": false,
+      "method": "audio transient count, independent of detect_hits thresholds",
+      "note": "独立计数=34 强瞬态(含少量拍+球双响,故为上限); B变体报51拍; A默认参数在此区间切成3段合计32拍最长15拍"
+    },
+    {
+      "id": "L04",
+      "start": 1423.1,
+      "end": 1454.3,
+      "shots": 42,
+      "shots_uncertain": false,
+      "method": "audio transient count, independent of detect_hits thresholds",
+      "note": "独立计数=42 强瞬态(含少量拍+球双响,故为上限); B变体报51拍; A默认参数在此区间切成4段合计27拍最长12拍"
+    },
+    {
+      "id": "L05",
+      "start": 1067.3,
+      "end": 1099.2,
+      "shots": 39,
+      "shots_uncertain": false,
+      "method": "audio transient count, independent of detect_hits thresholds",
+      "note": "独立计数=39 强瞬态(含少量拍+球双响,故为上限); B变体报49拍; A默认参数在此区间切成3段合计22拍最长16拍"
+    },
+    {
+      "id": "L06",
+      "start": 1346.3,
+      "end": 1373.9,
+      "shots": 36,
+      "shots_uncertain": false,
+      "method": "audio transient count, independent of detect_hits thresholds",
+      "note": "独立计数=36 强瞬态(含少量拍+球双响,故为上限); B变体报46拍; A默认参数在此区间切成3段合计32拍最长22拍"
+    },
+    {
+      "id": "L07",
+      "start": 493.4,
+      "end": 520.2,
+      "shots": 30,
+      "shots_uncertain": false,
+      "method": "audio transient count, independent of detect_hits thresholds",
+      "note": "独立计数=30 强瞬态(含少量拍+球双响,故为上限); B变体报45拍; A默认参数在此区间切成4段合计23拍最长13拍"
+    },
+    {
+      "id": "L08",
+      "start": 3456.5,
+      "end": 3482.2,
+      "shots": 36,
+      "shots_uncertain": false,
+      "method": "audio transient count, independent of detect_hits thresholds",
+      "note": "独立计数=36 强瞬态(含少量拍+球双响,故为上限); B变体报45拍; A默认参数在此区间切成2段合计30拍最长15拍"
+    },
+    {
+      "id": "L09",
+      "start": 3100.9,
+      "end": 3128.7,
+      "shots": 31,
+      "shots_uncertain": false,
+      "method": "audio transient count, independent of detect_hits thresholds",
+      "note": "独立计数=31 强瞬态(含少量拍+球双响,故为上限); B变体报41拍; A默认参数在此区间切成4段合计26拍最长8拍"
+    },
+    {
+      "id": "L10",
+      "start": 2482.1,
+      "end": 2505.3,
+      "shots": 25,
+      "shots_uncertain": false,
+      "method": "audio transient count, independent of detect_hits thresholds",
+      "note": "独立计数=25 强瞬态(含少量拍+球双响,故为上限); B变体报40拍; A默认参数在此区间切成2段合计22拍最长20拍"
+    },
+    {
+      "id": "L11",
+      "start": 3484.0,
+      "end": 3511.1,
+      "shots": 36,
+      "shots_uncertain": false,
+      "method": "audio transient count, independent of detect_hits thresholds",
+      "note": "独立计数=36 强瞬态(含少量拍+球双响,故为上限); B变体报40拍; A默认参数在此区间切成4段合计24拍最长12拍"
+    },
+    {
+      "id": "L12",
+      "start": 4444.4,
+      "end": 4471.3,
+      "shots": 26,
+      "shots_uncertain": false,
+      "method": "audio transient count, independent of detect_hits thresholds",
+      "note": "独立计数=26 强瞬态(含少量拍+球双响,故为上限); B变体报39拍; A默认参数在此区间切成3段合计19拍最长8拍"
+    },
+    {
+      "id": "L13",
+      "start": 1972.6,
+      "end": 1998.9,
+      "shots": 40,
+      "shots_uncertain": false,
+      "method": "audio transient count, independent of detect_hits thresholds",
+      "note": "独立计数=40 强瞬态(含少量拍+球双响,故为上限); B变体报38拍; A默认参数在此区间切成4段合计22拍最长10拍"
+    },
+    {
+      "id": "L14",
+      "start": 3019.4,
+      "end": 3037.6,
+      "shots": 31,
+      "shots_uncertain": false,
+      "method": "audio transient count, independent of detect_hits thresholds",
+      "note": "独立计数=31 强瞬态(含少量拍+球双响,故为上限); B变体报37拍; A默认参数在此区间切成1段合计28拍最长28拍"
+    },
+    {
+      "id": "L15",
+      "start": 4117.9,
+      "end": 4142.9,
+      "shots": 22,
+      "shots_uncertain": false,
+      "method": "audio transient count, independent of detect_hits thresholds",
+      "note": "独立计数=22 强瞬态(含少量拍+球双响,故为上限); B变体报36拍; A默认参数在此区间切成3段合计14拍最长8拍"
+    },
+    {
+      "id": "L16",
+      "start": 72.2,
+      "end": 92.6,
+      "shots": 26,
+      "shots_uncertain": false,
+      "method": "audio transient count, independent of detect_hits thresholds",
+      "note": "独立计数=26 强瞬态(含少量拍+球双响,故为上限); B变体报35拍; A默认参数在此区间切成4段合计18拍最长6拍"
+    },
+    {
+      "id": "L17",
+      "start": 1727.8,
+      "end": 1747.5,
+      "shots": 26,
+      "shots_uncertain": false,
+      "method": "audio transient count, independent of detect_hits thresholds",
+      "note": "独立计数=26 强瞬态(含少量拍+球双响,故为上限); B变体报35拍; A默认参数在此区间切成3段合计19拍最长12拍"
+    },
+    {
+      "id": "L18",
+      "start": 3180.2,
+      "end": 3202.7,
+      "shots": 25,
+      "shots_uncertain": false,
+      "method": "audio transient count, independent of detect_hits thresholds",
+      "note": "独立计数=25 强瞬态(含少量拍+球双响,故为上限); B变体报34拍; A默认参数在此区间切成2段合计15拍最长10拍"
+    },
+    {
+      "id": "L19",
+      "start": 563.9,
+      "end": 584.6,
+      "shots": 24,
+      "shots_uncertain": false,
+      "method": "audio transient count, independent of detect_hits thresholds",
+      "note": "独立计数=24 强瞬态(含少量拍+球双响,故为上限); B变体报33拍; A默认参数在此区间切成1段合计24拍最长24拍"
+    },
+    {
+      "id": "L20",
+      "start": 4683.6,
+      "end": 4703.4,
+      "shots": 24,
+      "shots_uncertain": false,
+      "method": "audio transient count, independent of detect_hits thresholds",
+      "note": "独立计数=24 强瞬态(含少量拍+球双响,故为上限); B变体报33拍; A默认参数在此区间切成2段合计21拍最长15拍"
+    },
+    {
+      "id": "L21",
+      "start": 1168.1,
+      "end": 1188.7,
+      "shots": 27,
+      "shots_uncertain": false,
+      "method": "audio transient count, independent of detect_hits thresholds",
+      "note": "独立计数=27 强瞬态(含少量拍+球双响,故为上限); B变体报32拍; A默认参数在此区间切成3段合计16拍最长12拍"
+    },
+    {
+      "id": "L22",
+      "start": 2343.6,
+      "end": 2363.9,
+      "shots": 22,
+      "shots_uncertain": false,
+      "method": "audio transient count, independent of detect_hits thresholds",
+      "note": "独立计数=22 强瞬态(含少量拍+球双响,故为上限); B变体报32拍; A默认参数在此区间切成2段合计12拍最长10拍"
+    },
+    {
+      "id": "L23",
+      "start": 4660.5,
+      "end": 4681.6,
+      "shots": 27,
+      "shots_uncertain": false,
+      "method": "audio transient count, independent of detect_hits thresholds",
+      "note": "独立计数=27 强瞬态(含少量拍+球双响,故为上限); B变体报31拍; A默认参数在此区间切成4段合计16拍最长6拍"
+    },
+    {
+      "id": "L24",
+      "start": 760.9,
+      "end": 780.8,
+      "shots": 27,
+      "shots_uncertain": false,
+      "method": "audio transient count, independent of detect_hits thresholds",
+      "note": "独立计数=27 强瞬态(含少量拍+球双响,故为上限); B变体报30拍; A默认参数在此区间切成4段合计14拍最长4拍"
+    },
+    {
+      "id": "L25",
+      "start": 3582.2,
+      "end": 3600.7,
+      "shots": 27,
+      "shots_uncertain": false,
+      "method": "audio transient count, independent of detect_hits thresholds",
+      "note": "独立计数=27 强瞬态(含少量拍+球双响,故为上限); B变体报30拍; A默认参数在此区间切成3段合计18拍最长11拍"
+    }
+  ]
+}

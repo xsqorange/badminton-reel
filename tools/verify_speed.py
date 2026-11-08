@@ -40,14 +40,15 @@ def main():
                                     "-of", "default=nw=1:nk=1", out],
                                    capture_output=True, text=True,
                                    encoding="utf-8", errors="replace").stdout.strip())
-        # 成片里还有 concat 边界余量(每段前后各 cut_padding 秒)
+        # 每段切片时前后各多留 cut_padding 秒(见 build_v4.cut_stage),
+        # 这段余量**也在变速范围内**,所以要跟源时长一起除以 speed。
         pad = len(segs) * pad_each * 2
-        expect = src_total / speed + pad
+        expect = (src_total + pad) / speed
         print(f"=== {key} {name}")
-        print(f"  选中 {len(segs)} 段,源时长合计 {src_total:.1f}s")
-        print(f"  理论输出 {src_total:.1f}/{speed} + {pad:.1f} 边界余量 = {expect:.1f}s")
+        print(f"  选中 {len(segs)} 段,源时长合计 {src_total:.1f}s(另含切片余量 {pad:.1f}s)")
+        print(f"  理论输出 ({src_total:.1f}+{pad:.1f})/{speed} = {expect:.1f}s")
         print(f"  实际成片 {dur:.1f}s   偏差 {dur-expect:+.1f}s")
-        print(f"  实测变速比 ≈ {src_total/dur:.3f} (期望 {speed:.3f})")
+        print(f"  实测变速比 ≈ {(src_total + pad)/dur:.3f} (期望 {speed:.3f})")
         sp = {}
         for s in segs:
             sp[round(s["end"] - s["start"], 1)] = sp.get(round(s["end"] - s["start"], 1), 0) + 1

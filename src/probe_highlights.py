@@ -36,11 +36,17 @@ def _filter_file_arg(csv_path):
     return d, os.path.basename(csv_path)
 
 
-def extract_motion(path, csv_path, fps_sample, scale):
-    """逐帧差分求运动能量。tblend=difference + signalstats.YAVG"""
+def extract_motion(path, csv_path, fps_sample, scale, roi=None):
+    """逐帧差分求运动能量。tblend=difference + signalstats.YAVG
+
+    roi:可选的 ffmpeg crop 滤镜参数(如 "crop=1280:620:0:460"),
+         **只统计主球场区域**。不设时是全画面 —— 全画面会把背景 4~5 片场地的
+         运动也算进来,配合混合音频就量成了"主球场+背景场"的混合瞬态密度。
+    """
     cwd, fname = _filter_file_arg(csv_path)
-    vf = (f"fps={float(fps_sample)},scale={scale},tblend=all_mode=difference,"
-          f"signalstats,metadata=print:key=lavfi.signalstats.YAVG:file={fname}")
+    vf = (f"fps={float(fps_sample)},{roi}," if roi else f"fps={float(fps_sample)},")
+    vf += f"scale={scale},tblend=all_mode=difference,"\
+           f"signalstats,metadata=print:key=lavfi.signalstats.YAVG:file={fname}"
     cmd = ["ffmpeg", "-hide_banner", "-loglevel", "error", "-y",
            "-i", os.path.abspath(path), "-an", "-vf", vf, "-f", "null", "-"]
     p = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8",
@@ -122,8 +128,9 @@ def main():
     print(f"FILE={os.path.basename(path)} DURATION={dur:.1f}s", flush=True)
     mcsv = out + ".motion.csv"
     acsv = out + ".audio.csv"
-    ok_m = extract_motion(path, mcsv, a["motion_sample_fps"], a["motion_scale"])
-    print(f"motion_ok={ok_m}", flush=True)
+    ok_m = extract_motion(path, mcsv, a["motion_sample_fps"], a["motion_scale"],
+                          roi=a.get("motion_roi") or None)
+    print(f"motion_ok={ok_m} roi={a.get('motion_roi')}", flush=True)
     ok_a = extract_audio(path, acsv, a["audio_stats_reset"])
     print(f"audio_ok={ok_a}", flush=True)
     if not (ok_m and ok_a):

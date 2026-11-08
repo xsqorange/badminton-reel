@@ -1,0 +1,104 @@
+{
+  "batches": {
+    "m3": {
+      "analysis": {
+        "hit_thresh_db": -32.0,
+        "hit_median_offset_db": 8.0,
+        "hit_rise_db": 6.0,
+        "hit_min_gap": 0.16,
+        "hit_env_window_ms": 10,
+        "hit_median_window": 51,
+        "rally_max_gap": 1.6,
+        "hit_min_rally_shots": 2,
+        "min_shots": 4
+      },
+      "select": {
+        "target_seconds": 330,
+        "speed": 1.1,
+        "min_lead": 0.9,
+        "min_tail": 1.2,
+        "max_lead": 1.4,
+        "max_tail": 2.4,
+        "min_gap_between": 2.0,
+        "long_rally_shots": 30,
+        "long_rally_force": false,
+        "long_rally_exempt_score_evidence": true
+      }
+    },
+    "m2": {
+      "analysis": {
+        "hit_thresh_db": -32.0,
+        "hit_median_offset_db": 8.0,
+        "hit_rise_db": 6.0,
+        "hit_min_gap": 0.16,
+        "hit_env_window_ms": 10,
+        "hit_median_window": 51,
+        "rally_max_gap": 1.6,
+        "hit_min_rally_shots": 2,
+        "min_shots": 4
+      },
+      "select": {
+        "target_seconds": 330,
+        "speed": 1.1,
+        "min_lead": 0.9,
+        "min_tail": 1.2,
+        "max_lead": 1.4,
+        "max_tail": 2.4,
+        "min_gap_between": 2.0,
+        "long_rally_shots": 30,
+        "long_rally_force": false,
+        "long_rally_exempt_score_evidence": true
+      }
+    },
+    "f1": {
+      "analysis": {
+        "hit_thresh_db": -32.0,
+        "hit_median_offset_db": 8.0,
+        "hit_rise_db": 6.0,
+        "hit_min_gap": 0.16,
+        "hit_env_window_ms": 10,
+        "hit_median_window": 51,
+        "rally_max_gap": 1.6,
+        "hit_min_rally_shots": 2,
+        "min_shots": 4
+      },
+      "select": {
+        "target_seconds": 330,
+        "speed": 1.1,
+        "min_lead": 0.9,
+        "min_tail": 1.2,
+        "max_lead": 1.4,
+        "max_tail": 2.4,
+        "min_gap_between": 2.0,
+        "long_rally_shots": 30,
+        "long_rally_force": false,
+        "long_rally_exempt_score_evidence": true
+      }
+    },
+    "f2": {
+      "analysis": {
+        "hit_thresh_db": -32.0,
+        "hit_median_offset_db": 8.0,
+        "hit_rise_db": 6.0,
+        "hit_min_gap": 0.16,
+        "hit_env_window_ms": 10,
+        "hit_median_window": 51,
+        "rally_max_gap": 1.6,
+        "hit_min_rally_shots": 2,
+        "min_shots": 4
+      },
+      "select": {
+        "target_seconds": 330,
+        "speed": 1.1,
+        "min_lead": 0.9,
+        "min_tail": 1.2,
+        "max_lead": 1.4,
+        "max_tail": 2.4,
+        "min_gap_between": 2.0,
+        "long_rally_shots": 30,
+        "long_rally_force": false,
+        "long_rally_exempt_score_evidence": true
+      }
+    }
+  }
+}

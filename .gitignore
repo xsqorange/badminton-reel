@@ -43,6 +43,9 @@ wx_check*.jpg
 chk_*.jpg
 cmp_*.jpg
 probe.png
+# 成片抽帧联系表(体积大,不入库;本地生成,文档里只描述用途)
+reel_check_*.jpg
+reel_check_*.png
 
 # ---------- 临时/实验 ----------
 enc_test*/

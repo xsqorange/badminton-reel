@@ -40,8 +40,11 @@ def main():
     fc = (f"[1:a]afade=t=in:st=0:d={m['fade_in']},"
           f"afade=t=out:st={max(0, dur - m['fade_out']):.2f}:d={m['fade_out']},"
           f"volume={m['volume']},alimiter=limit={m['limiter']}[aout]")
+    # 配乐床比成片短时要**循环铺满**(-stream_loop -1),否则配合 -shortest
+    # 会把成片截断到配乐床的长度 —— 成片 440s / 配乐床 360s 时,片尾 80s 会凭空消失。
+    # (这个坑之前没暴露:那几批成片都在 360s 以内。)
     cmd = ["ffmpeg", "-hide_banner", "-loglevel", "error", "-y",
-           "-i", video, "-i", bgm,
+           "-i", video, "-stream_loop", "-1", "-i", bgm,
            "-filter_complex", fc, "-map", "0:v", "-map", "[aout]",
            "-c:v", "copy", "-c:a", mx["audio_codec"], "-b:a", mx["audio_bitrate"],
            "-ar", mx["audio_sample_rate"],
@@ -50,7 +53,13 @@ def main():
     if rc != 0:
         print("FAIL:", err[:600])
         raise SystemExit("[FAIL] 混音失败")
-    print(f"DONE {out}  dur={probe(out):.1f}s  {os.path.getsize(out)/1024/1024:.1f}MB")
+    out_dur = probe(out)
+    # 成片时长必须与输入一致 —— 少了就是被截断了(配乐床不够长 / 流拷贝丢帧)。
+    if abs(out_dur - dur) > 0.5:
+        raise SystemExit(
+            f"[FAIL] 混音后时长不符:输入 {dur:.1f}s → 输出 {out_dur:.1f}s"
+            f"(差 {out_dur - dur:+.1f}s)。成片被截断了,不能交付。")
+    print(f"DONE {out}  dur={out_dur:.1f}s  {os.path.getsize(out)/1024/1024:.1f}MB")
 
 
 if __name__ == "__main__":

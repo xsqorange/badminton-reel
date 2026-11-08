@@ -24,6 +24,11 @@ badminton-reel/
 │   ├── exp_stutter.py         # 流畅度质检:静止帧/运动突变点
 │   ├── verify_speed.py        # 变速倍率核验
 │   ├── verify_equivalence.py  # 等价性核验:重跑分析阶段 vs 归档基线
+│   ├── annotate_rounds.py     # 标注工具:生成回合核验联系表(评估集入口,支持多窗口)
+│   ├── merge_gt.py            # 标注碎片合并成 ground truth(唯一写 GT 的入口,带校验)
+│   ├── hit_sheet.py           # 击球时刻核对表:逐拍验证拍数(长回合阈值核对)
+│   ├── eval_rounds.py         # 回合识别评测:P/R/F1 + 长回合召回 + 一键回归
+│   ├── export_rally.py        # 导出单个回合为独立成片(最长 N 拍等)
 │   ├── make_smoke_fixture.py  # 生成合成素材 + 小 profile(10 秒冒烟测试)
 │   ├── sync_deliver.py        # 成片交付到素材目录
 │   ├── verify_reel.py         # 成片抽帧联系表(视觉核验)
@@ -32,11 +37,23 @@ badminton-reel/
 │   ├── frames_only.py         # 批量抽帧
 │   ├── enc_test.py            # 编码参数对照实验
 │   ├── enc_cmp2.py            # 编码画质并排对比
-│   └── wx_send_video.py       # 微信通道发送(薄封装)
+│   ├── wx_send_video.py       # 微信通道发送(薄封装)
+│   └── wx_channel_diag.py     # 微信通道逐端点诊断(定位发送失败的原因)
+│
+├── eval/                      # 评估集(进 git)
+│   ├── README.md              #   怎么跑评测 / 指标含义
+│   ├── ground_truth/          #   标注数据(每文件 = 一个标注窗口)
+│   │   ├── c3_559-1200.json   #     11月7日 3号场 · 长回合专窗前段
+│   │   ├── c3_1200-2400.json  #     11月7日 3号场 · 普通窗口
+│   │   └── c3_2400-3039.json  #     11月7日 3号场 · 长回合专窗后段
+│   ├── baseline/              #   回归基线报告(改算法前后对比)
+│   └── reports/               #   历次评测输出
 │
 ├── docs/                      # 文档
 │   ├── 操作流程.md            # 完整流程 + 参数理由 + 踩坑
+│   ├── 标注规范.md            # 回合标注规范(评估集怎么标、标注什么)
 │   ├── 微信通道.md            # iLink 协议逆向笔记
+│   ├── 执行报告.md            # 每批素材的执行报告(改了什么/指标/还差什么)
 │   └── 踩坑记录.md            # 全部失败尝试(含被否决的方案)
 │
 ├── config/                    # 配置文件
@@ -44,7 +61,9 @@ badminton-reel/
 │   ├── profiles/              # 场景档案(只写差异,叠加在 base 之上)
 │   │   ├── README.md          #   怎么新增一个 profile
 │   │   ├── short-60s.yaml     #   竖屏 60 秒短视频
-│   │   └── rehearsal.yaml     #   快速试跑
+│   │   ├── rehearsal.yaml     #   快速试跑
+│   │   ├── club-2026-11-01.yaml #  11月1日 龙泽(1/2号场)
+│   │   └── club-2026-11-07.yaml #  11月7日 龙泽(3号场,开长回合强制纳入)
 │   ├── music/                 # BGM 生成 prompt
 │   │   ├── batch1.json
 │   │   ├── batch2.json

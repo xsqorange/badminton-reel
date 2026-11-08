@@ -109,10 +109,81 @@ def cluster_rallies(hits, max_gap, min_rally):
     return out
 
 
+def merge_rallies(rallies, merge_gap):
+    """把间隔 <= merge_gap 的相邻回合合并成一段。
+
+    聚类用 rally_max_gap 切出的片段,在"回合之间真的停了一下"的场合会多切一刀
+    (例如换发球、捡球的空档)。merge_gap 用来把这种相邻片段接回一个回合。
+    merge_gap=0 表示不合并(与原行为一致)。
+    """
+    if not merge_gap or not rallies:
+        return rallies
+    out = []
+    for r in sorted(rallies, key=lambda x: x["start"]):
+        if out and r["start"] - out[-1]["end"] <= merge_gap:
+            cur = out[-1]
+            cur["end"] = max(cur["end"], r["end"])
+            cur["shots"] = cur["shots"] + r["shots"]
+            cur["hits"] = cur["hits"] + r["hits"]
+            cur["duration"] = cur["end"] - cur["start"]
+            iv = [cur["hits"][i + 1] - cur["hits"][i] for i in range(len(cur["hits"]) - 1)]
+            cur["mean_interval"] = float(np.mean(iv)) if iv else 0.0
+            cur["std_interval"] = float(np.std(iv)) if iv else 0.0
+            cur["regularity"] = float(1.0 / (1.0 + (np.std(iv) if iv else 0.5)))
+            cur.setdefault("merged_from", []).append((r["start"], r["end"]))
+        else:
+            out.append(dict(r, merged_from=[]))
+    for r in out:
+        if not r["merged_from"]:
+            r.pop("merged_from", None)
+    return out
+
+
+def load_motion_gate(csv_path, percentile, window):
+    """读主球场 ROI 的运动能量,返回 (判定函数, 统计)。
+
+    判定:某时刻附近 window 秒内的运动峰值是否 >= 全片 percentile 分位。
+    即"画面上主球场正在剧烈运动"才算这一刻有戏 —— 背景场地的击球不伴随
+    主球场的运动,于是被挡掉。
+    """
+    import re as _re
+    pts, val = [], []
+    pat_t = _re.compile(r"pts_time:([0-9.]+)")
+    pat_v = _re.compile(r"lavfi\.signalstats\.YAVG=([0-9.]+)")
+    cur_t = None
+    with open(csv_path, "r", encoding="utf-8", errors="replace") as f:
+        for line in f:
+            m = pat_t.search(line)
+            if m:
+                cur_t = float(m.group(1))
+                continue
+            m = pat_v.search(line)
+            if m and cur_t is not None:
+                pts.append(cur_t)
+                val.append(float(m.group(1)))
+                cur_t = None
+    if not val:
+        return None, {}
+    thr = float(np.percentile(val, percentile))
+    step = (pts[1] - pts[0]) if len(pts) > 1 else 0.2
+    import bisect as _bisect
+
+    def active(t):
+        lo = _bisect.bisect_left(pts, t - window)
+        hi = _bisect.bisect_right(pts, t + window)
+        if hi <= lo:
+            return False
+        return max(val[lo:hi]) >= thr
+
+    return active, {"threshold": thr, "samples": len(val),
+                    "percentile": percentile, "window": window, "step": step}
+
+
 def main():
     ap = argparse.ArgumentParser(description="击球瞬态检测与回合聚类")
     ap.add_argument("video", help="源视频")
     ap.add_argument("out", help="输出 JSON")
+    ap.add_argument("--motion", help="可选:主球场 ROI 的运动能量 CSV(配合 analysis.shot_gate_percentile 做画面-音频共现门控)")
     add_config_args(ap)
     args = ap.parse_args()
 
@@ -135,6 +206,63 @@ def main():
     rallies = cluster_rallies(hits, max_gap=a["rally_max_gap"],
                               min_rally=a["hit_min_rally_shots"])
     print(f"rallies (>={a['hit_min_rally_shots']} shots): {len(rallies)}")
+
+    # ---- 回合合并:把间隔 <= rally_merge_gap 的相邻片段接回一个回合 ----
+    merge_gap = float(a.get("rally_merge_gap") or 0.0)
+    if merge_gap:
+        before = len(rallies)
+        rallies = merge_rallies(rallies, merge_gap)
+        n_merged = sum(1 for r in rallies if r.get("merged_from"))
+        print(f"回合合并 gap={merge_gap}s: {before} 段 -> {len(rallies)} 段"
+              f"({n_merged} 段是合并来的)")
+
+    # ---- 拍数口径可与聚类口径分开 ----
+    # 聚类(回合边界)要"不切碎":阈值太严会漏掉几拍 → 回合内部出现 >rally_max_gap 的
+    # 空档 → 一个真实回合被切成好几段 → 拍数被低估、"没有长回合"。
+    # 计数(拍数)要"数得准":阈值太松会把衣物摩擦/走动也数成击球 → 拍数虚高。
+    # 两组参数不配置时行为与原来完全一致(计数 = 聚类)。
+    c_thresh = a.get("count_hit_thresh_db", a["hit_thresh_db"])
+    c_off = a.get("count_hit_median_offset_db", a["hit_median_offset_db"])
+    c_rise = a.get("count_hit_rise_db", a["hit_rise_db"])
+    if (c_thresh, c_off, c_rise) != (a["hit_thresh_db"],
+                                      a["hit_median_offset_db"],
+                                      a["hit_rise_db"]):
+        chits = detect_hits(
+            x, sr,
+            thresh_db=c_thresh,
+            min_gap=a["hit_min_gap"],
+            env_ms=a["hit_env_window_ms"],
+            median_window=a["hit_median_window"],
+            median_offset_db=c_off,
+            rise_db=c_rise,
+        )
+        for r in rallies:
+            r["shots_raw"] = r["shots"]        # 聚类口径的击球数(留档)
+            r["shots"] = int(np.searchsorted(chits, r["end"], "right")
+                             - np.searchsorted(chits, r["start"], "left"))
+        print(f"计数口径独立: count hits={len(chits)} "
+              f"(thresh={c_thresh} off={c_off} rise={c_rise})")
+
+        # ---- 主球场门控:只认"主球场正在动"的那些瞬态 ----
+        # 混合音频里混着背景场地的击球声;配合 ROI 运动能量做共现门控,
+        # 背景场地那一拍没有主球场的运动,于是被挡掉。
+        gate_pct = float(a.get("shot_gate_percentile") or 0.0)
+        if gate_pct and args.motion:
+            active, ginfo = load_motion_gate(
+                args.motion, gate_pct, float(a.get("shot_gate_window") or 0.6))
+            if active is None:
+                print("SHOT_GATE_ERROR 运动 CSV 无数据,跳过门控", flush=True)
+            else:
+                kept = [t for t in chits if active(t)]
+                for r in rallies:
+                    r["shots_ungated"] = r["shots"]
+                    r["shots"] = int(np.searchsorted(kept, r["end"], "right")
+                                     - np.searchsorted(kept, r["start"], "left"))
+                print(f"主球场门控: motion={args.motion} "
+                      f"pct={ginfo['percentile']} thr={ginfo['threshold']:.3f} "
+                      f"window={ginfo['window']}s  "
+                      f"count hits {len(chits)} -> {len(kept)}")
+
     multi = [r for r in rallies if r["shots"] >= a["min_shots"]]
     print(f"rallies with >={a['min_shots']} shots: {len(multi)}")
     best = sorted(rallies, key=lambda r: -(r["shots"] * r["regularity"]))[:15]

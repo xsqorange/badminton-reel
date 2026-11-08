@@ -66,8 +66,12 @@ class Runner:
         self.run("probe_highlights.py", [src, prefix], f"[{key}] ① 提取运动能量与音频RMS")
 
         # ② 击球瞬态 + 回合聚类
+        # profile 开了画面-音频共现门控(analysis.shot_gate_percentile > 0)时,
+        # 必须把 ROI 运动能量 CSV 传进去 —— 否则门控代码永远不会被执行。
         hits = os.path.join(self.analysis_dir, f"{key}.hits.json")
-        self.run("detect_hits.py", [src, hits], f"[{key}] ② 击球瞬态检测与回合聚类")
+        gate = float(self.cfg.section("analysis").get("shot_gate_percentile") or 0.0)
+        hargs = [src, hits] + (["--motion", prefix + ".motion.csv"] if gate > 0 else [])
+        self.run("detect_hits.py", hargs, f"[{key}] ② 击球瞬态检测与回合聚类")
 
         # ③ 选段
         sel = os.path.join(self.analysis_dir, f"{key}.v5.json")

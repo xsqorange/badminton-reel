@@ -28,6 +28,32 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 _MISSING = object()
 
 
+def enable_utf8_safe_output():
+    """让 stdout/stderr 在 GBK 控制台上也不会因字符崩掉。
+
+    Windows 控制台默认编码是 GBK(CP936),打印 ✅ / ✓ / ❌ 这类字符会抛
+    UnicodeEncodeError —— 表现是"核验全绿却以退出码 1 结束",
+    很容易被误读成"回归失败",也会让回归门形同虚设。
+
+    输出被重定向到管道/文件时改用 UTF-8(日志可读);
+    仍是终端时保留原编码,只把编不出的字符替换掉。
+    """
+    for s in (sys.stdout, sys.stderr):
+        try:
+            if s is None:
+                continue
+            if s.isatty():
+                s.reconfigure(errors="replace")
+            else:
+                s.reconfigure(encoding="utf-8", errors="replace")
+        except Exception:
+            pass
+
+
+# 模块加载即生效:所有走配置层的脚本都不会再因编码崩掉
+enable_utf8_safe_output()
+
+
 # ---------------------------------------------------------------- YAML
 
 def _require_yaml():
@@ -180,6 +206,9 @@ SCHEMA = [
     ("select.duration_score_tier2", (int, float), True),
     ("select.duration_score_tier3", (int, float), True),
     ("select.duration_score_tier4", (int, float), True),
+    ("select.long_rally_shots", int, True),
+    ("select.long_rally_force", bool, True),
+    ("select.long_rally_exempt_score_evidence", bool, True),
 
     ("build.min_gap_between", (int, float), True),
     ("build.cut_padding", (int, float), True),
@@ -224,6 +253,30 @@ SCHEMA = [
     ("wechat.cq", (int, float), True),
     ("wechat.maxrate", str, True),
     ("wechat.bufsize", str, True),
+
+    ("eval.ground_truth_dir", str, True),
+    ("eval.baseline_report", str, True),
+    ("eval.match_overlap_ratio", (int, float), True),
+    ("eval.complete_ratio", (int, float), True),
+    ("eval.long_rally_shots", int, True),
+    ("eval.regression_tolerance", (int, float), True),
+
+    ("annotation.window", list, True),
+    ("annotation.frame_rate", (int, float), True),
+    ("annotation.frame_width", int, True),
+    ("annotation.frame_height", int, True),
+    ("annotation.frames_per_rally", int, True),
+    ("annotation.context_seconds", (int, float), True),
+    ("annotation.rows_per_sheet", int, True),
+    ("annotation.font", str, True),
+    ("annotation.font_size", int, True),
+    ("annotation.gap_scan_min_seconds", (int, float), True),
+    ("annotation.gap_scan_step_seconds", (int, float), True),
+    ("annotation.env_width", int, True),
+    ("annotation.env_height", int, True),
+    ("annotation.env_sr", int, True),
+    ("annotation.env_win_ms", (int, float), True),
+    ("annotation.env_min_shots", int, True),
 
     ("output.master_dir", str, True),
     ("output.wechat_dir", str, True),

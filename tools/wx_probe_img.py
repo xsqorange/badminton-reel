@@ -37,7 +37,8 @@ item = {
     "image_item": {
         "media": {
             "encrypt_query_param": dp,
-            "aes_key": base64.b64encode(aeskey).decode(),
+            # 与 SDK 的 aesKeyHexToBase64 一致(44 字符),见 ilink_client.aes_key_base64
+            "aes_key": ic.aes_key_base64(aeskey),
             "encrypt_type": 1,
         },
         "mid_size": len(cipher),
@@ -48,6 +49,6 @@ st, resp = ic.send_message(token, chat_id, ctx, [item])
 print("sendmessage(image) ->", st, resp[:300])
 
 # 立刻尝试回查
-json.dump({"download_param": dp, "aes_key_b64": base64.b64encode(aeskey).decode(),
+json.dump({"download_param": dp, "aes_key_b64": ic.aes_key_base64(aeskey),
            "filekey": filekey}, open(os.path.join(os.path.dirname(png_path), "last_img.json"), "w",
            encoding="utf-8"), ensure_ascii=False, indent=2)

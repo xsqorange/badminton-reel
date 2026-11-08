@@ -69,7 +69,7 @@ def cut_stage(video, segs, tmpdir, enc, padding, use_nv):
         if rc != 0:
             print(f"  cut FAIL {i}: {err[:200]}")
             continue
-        parts.append(p)
+        parts.append((p, s))
         print(f"  cut {i:3d} {s['start']:8.1f}-{s['end']:8.1f} sp={sp:.2f} "
               f"-> {(en - st) / sp:5.1f}s", flush=True)
     return parts
@@ -79,19 +79,28 @@ def concat_stage(parts, out, enc, use_nv):
     """用 concat filter 拼接,保证时间轴连续"""
     n = len(parts)
     fps = enc["fps"]
-    inputs = []
-    for p in parts:
-        inputs += ["-i", p]
     labels = "".join(f"[{i}:v]" for i in range(n))
     fc = (f"{labels}concat=n={n}:v=1:a=0[cat];"
           f"[cat]fps=fps={fps}:round={enc['fps_round']}:start_time={enc['fps_start_time']}[outv]")
     if os.path.exists(out):
         os.remove(out)
-    cmd = ["ffmpeg", "-hide_banner", "-loglevel", "error", "-y"] + inputs + \
-          ["-filter_complex", fc, "-map", "[outv]", "-an",
-           "-vsync", enc["vsync"], "-r", str(fps),
-           *video_args(enc, fps, use_nv), "-movflags", enc["movflags"], out]
+    cmd = ["ffmpeg", "-hide_banner", "-loglevel", "error", "-y"]
+    for p, _ in parts:
+        cmd += ["-i", p]
+    cmd += ["-filter_complex", fc, "-map", "[outv]", "-an",
+            "-vsync", enc["vsync"], "-r", str(fps),
+            *video_args(enc, fps, use_nv), "-movflags", enc["movflags"], out]
     return run(cmd)
+
+
+def probe_duration(path):
+    """实测一个文件的时长(秒)。失败返回 0。"""
+    rc, out, _ = run(["ffprobe", "-v", "error", "-show_entries", "format=duration",
+                      "-of", "default=nw=1:nk=1", path])
+    try:
+        return float(out.strip())
+    except (ValueError, AttributeError):
+        return 0.0
 
 
 def pick_speed(seg, base):
@@ -121,18 +130,15 @@ def main():
     # 变速分配
     for s in segs:
         s["speed"] = pick_speed(s, base_speed)
-    segs.sort(key=lambda s: -s["score"])
-    chosen, used = [], 0.0
-    for s in segs:
-        dur = (s["end"] - s["start"]) / s["speed"]
-        if used + dur > target:
-            continue
-        if any(abs(s["start"] - x["end"]) < bld["min_gap_between"] for x in chosen):
-            continue
-        chosen.append(s)
-        used += dur
-    chosen.sort(key=lambda s: s["start"])
-    print(f"selected {len(chosen)}  -> {used:.1f}s")
+    # 选段只在 select_v5 做一次(那是唯一的选段入口)。
+    # 旧版在这里重复筛一遍:约束比 select 更松(间隔 1.2s vs 2.0s)、
+    # 预算口径相同,结果与 select 完全一致 —— 等于维护了两份同一套规则。
+    # 删掉之后,"长回合强制纳入"只在 select_v5 一处判定,不会再被这里挤掉。
+    chosen = sorted(segs, key=lambda s: s["start"])
+    used = sum((s["end"] - s["start"]) / s["speed"] for s in chosen)
+    print(f"selected {len(chosen)}  -> {used:.1f}s (target {target:.0f}s)")
+    if used > target:
+        print(f"  NOTE: 超出时长预算 {used - target:.1f}s —— 长回合强制纳入所致")
     tmpdir = os.path.join(os.path.dirname(out), "_v4_" +
                           os.path.splitext(os.path.basename(out))[0])
     os.makedirs(tmpdir, exist_ok=True)
@@ -147,7 +153,30 @@ def main():
         raise SystemExit("[FAIL] 拼接失败")
     dur = float(run(["ffprobe", "-v", "error", "-show_entries", "format=duration",
                      "-of", "default=nw=1:nk=1", out])[1].strip())
+    # 落一份"成片里到底有什么"清单:每个片段在成片中的位置与时长。
+    # R4(长回合在片证据)与评估脚本都以这份清单为准,而不是以选段 JSON 为准 ——
+    # 只有实际切出来的才算数。
+    #
+    # 时长必须**实测切片文件**,不能按 (end-start)/speed 算:
+    # 切片时前后各多留了 cut_padding 秒(见 cut_stage),这段余量也在变速范围内,
+    # 按公式算会每段少算 2*padding/speed,33 段累计偏差 7 秒以上 ——
+    # 长回合在成片里的位置会明显偏掉。
+    manifest, t = [], 0.0
+    for i, (p, s) in enumerate(parts):
+        seg_dur = probe_duration(p)
+        manifest.append({
+            "index": i,
+            "reel_start": round(t, 3),
+            "reel_duration": round(seg_dur, 3),
+            "src_start": s["start"], "src_end": s["end"],
+            "speed": s["speed"], "shots": s.get("shots"), "score": s.get("score"),
+        })
+        t += seg_dur
+    with open(out + ".segments.json", "w", encoding="utf-8") as f:
+        json.dump({"out": os.path.basename(out), "total": round(t, 3),
+                   "segments": manifest}, f, ensure_ascii=False, indent=2)
     print(f"DONE {out}  dur={dur:.1f}s  {os.path.getsize(out)/1024/1024:.1f}MB  nvenc={nv}")
+    print(f"  片段清单: {out}.segments.json ({len(manifest)} 段)")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,246 @@
+{
+  "ground_truth_files": [
+    "c3_1200-2400.json",
+    "c3_2400-3039.json",
+    "c3_559-1200.json",
+    "c3_long_rallies.json",
+    "c3_negative_rallies.json"
+  ],
+  "ground_truth_hashes": {
+    "c3_1200-2400.json": "0585ea84b8ab0b9819568334b4a9018d5d71a31f2aab4fad8531f97907ac68d8",
+    "c3_2400-3039.json": "7ba3d02270e8934368c9a88a1a3254b1ebfe8534b6ff074f259830fab305e909",
+    "c3_559-1200.json": "2f9a66ed0895802e73bc02a03e8312b91ba76db8c1c48d3986f776d158c5ed04",
+    "c3_long_rallies.json": "447e4986246d8e1f879ecbb1830334b72b7bf458f2fa52b2e969d5fc7feb3ff5",
+    "c3_negative_rallies.json": "19a18e169b0694e1e5b0e9f2ba85f0b331ac852b165a91735cac90c88679830b"
+  },
+  "gt_rallies": 184,
+  "windows": [
+    [
+      559.0,
+      1200.0
+    ],
+    [
+      1200.0,
+      2400.0
+    ],
+    [
+      2400.0,
+      3039.1
+    ]
+  ],
+  "detection": {
+    "tp": 104,
+    "fp": 163,
+    "fn": 53,
+    "precision": 0.3895,
+    "recall": 0.6624,
+    "f1": 0.4906
+  },
+  "shot_count_mae": 13.0,
+  "shot_count_mae_n": 7,
+  "shot_count_uncertain": 97,
+  "shot_count_mae_recall": 4.682,
+  "shot_count_mae_recall_n": 22,
+  "shot_count_mae_negative": 4.0,
+  "shot_count_mae_negative_n": 5,
+  "shot_count_mae_all": 6.294,
+  "shot_count_mae_all_n": 34,
+  "shot_count_mae_frame_review": 4.556,
+  "shot_count_mae_frame_review_n": 27,
+  "negative_samples": [
+    {
+      "id": "L02",
+      "src_start": 446.9,
+      "src_end": 483.4,
+      "gt_shots": 0,
+      "det_shots": 4,
+      "detected": true,
+      "false_long_rally": false
+    },
+    {
+      "id": "L07",
+      "src_start": 493.4,
+      "src_end": 520.2,
+      "gt_shots": 0,
+      "det_shots": 4,
+      "detected": true,
+      "false_long_rally": false
+    },
+    {
+      "id": "L19",
+      "src_start": 563.9,
+      "src_end": 584.6,
+      "gt_shots": 2,
+      "det_shots": 8,
+      "detected": true,
+      "false_long_rally": false
+    },
+    {
+      "id": "L05",
+      "src_start": 1067.3,
+      "src_end": 1099.2,
+      "gt_shots": 0,
+      "det_shots": 4,
+      "detected": true,
+      "false_long_rally": false
+    },
+    {
+      "id": "L03",
+      "src_start": 1102.2,
+      "src_end": 1130.9,
+      "gt_shots": 3,
+      "det_shots": 1,
+      "detected": true,
+      "false_long_rally": false
+    }
+  ],
+  "negative_false_long_rally": 0,
+  "segment": {
+    "tp": 7,
+    "fp": 1,
+    "fn": 0,
+    "precision": 0.875,
+    "recall": 1.0,
+    "f1": 0.9333,
+    "matched": 7,
+    "total": 13,
+    "complete_rally_rate": 0.8571
+  },
+  "long_rally": {
+    "threshold_shots": 30,
+    "gt_count": 9,
+    "gt_count_ge30": 0,
+    "detected": 9,
+    "recall_detection": 1.0,
+    "in_reel": 9,
+    "recall_reel": 1.0,
+    "list": [
+      {
+        "id": "L01",
+        "key": "c3_long_rallies.json::L01",
+        "file": "c3_long_rallies.json",
+        "src_start": 1212.2,
+        "src_end": 1251.5,
+        "shots": 16,
+        "human": true,
+        "segment_no": "#6",
+        "in_reel": true,
+        "reel_start": 44.5,
+        "reel_duration": 38.033,
+        "coverage": 1.0
+      },
+      {
+        "id": "L06",
+        "key": "c3_long_rallies.json::L06",
+        "file": "c3_long_rallies.json",
+        "src_start": 1346.3,
+        "src_end": 1373.9,
+        "shots": 11,
+        "human": true,
+        "segment_no": "#7",
+        "in_reel": true,
+        "reel_start": 82.533,
+        "reel_duration": 27.15,
+        "coverage": 1.0
+      },
+      {
+        "id": "L00",
+        "key": "c3_long_rallies.json::L00",
+        "file": "c3_long_rallies.json",
+        "src_start": 29.1,
+        "src_end": 67.2,
+        "shots": 13,
+        "human": true,
+        "segment_no": "#0",
+        "in_reel": true,
+        "reel_start": 0.0,
+        "reel_duration": 36.8,
+        "coverage": 1.0
+      },
+      {
+        "id": "L04",
+        "key": "c3_long_rallies.json::L04",
+        "file": "c3_long_rallies.json",
+        "src_start": 1423.1,
+        "src_end": 1454.3,
+        "shots": 10,
+        "human": true,
+        "segment_no": "#8",
+        "in_reel": true,
+        "reel_start": 109.683,
+        "reel_duration": 30.55,
+        "coverage": 1.0
+      },
+      {
+        "id": "L13",
+        "key": "c3_long_rallies.json::L13",
+        "file": "c3_long_rallies.json",
+        "src_start": 1972.6,
+        "src_end": 1998.9,
+        "shots": 6,
+        "human": true,
+        "segment_no": "#10",
+        "in_reel": true,
+        "reel_start": 160.499,
+        "reel_duration": 26.05,
+        "coverage": 1.0
+      },
+      {
+        "id": "L14",
+        "key": "c3_long_rallies.json::L14",
+        "file": "c3_long_rallies.json",
+        "src_start": 3019.4,
+        "src_end": 3037.6,
+        "shots": 18,
+        "human": true,
+        "segment_no": "#12",
+        "in_reel": true,
+        "reel_start": 210.215,
+        "reel_duration": 19.15,
+        "coverage": 1.0
+      },
+      {
+        "id": "L09",
+        "key": "c3_long_rallies.json::L09",
+        "file": "c3_long_rallies.json",
+        "src_start": 3100.9,
+        "src_end": 3128.7,
+        "shots": 6,
+        "human": true,
+        "segment_no": "#13",
+        "in_reel": true,
+        "reel_start": 229.365,
+        "reel_duration": 27.8,
+        "coverage": 1.0
+      },
+      {
+        "id": "L08",
+        "key": "c3_long_rallies.json::L08",
+        "file": "c3_long_rallies.json",
+        "src_start": 3456.5,
+        "src_end": 3482.2,
+        "shots": 16,
+        "human": true,
+        "segment_no": "#14",
+        "in_reel": true,
+        "reel_start": 257.165,
+        "reel_duration": 25.55,
+        "coverage": 1.0
+      },
+      {
+        "id": "L11",
+        "key": "c3_long_rallies.json::L11",
+        "file": "c3_long_rallies.json",
+        "src_start": 3484.0,
+        "src_end": 3511.1,
+        "shots": 18,
+        "human": true,
+        "segment_no": "#15",
+        "in_reel": true,
+        "reel_start": 282.715,
+        "reel_duration": 26.766,
+        "coverage": 1.0
+      }
+    ]
+  }
+}

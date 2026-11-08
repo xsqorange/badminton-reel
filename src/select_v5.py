@@ -125,6 +125,32 @@ def main():
     min_shots = int(a["min_shots"])
     speed = float(s["speed"])
 
+    # ---- 人工闸门:显式排除的区间(数据源 = 负样本 GT)----
+    # 算法挡不住的情况:主球场当时确实在动(单人挥拍练习同样产生运动能量),
+    # 而相邻场地的击球声混在同一条音轨里。注意:**相邻场地在画面的左右缘**
+    # (x≲280 与 x≳1680;Chief 抽帧 work/chief_review/frame_1985.png、frame_600.png 证实
+    #  画面左右缘各有别场地球员持拍活动,中间背景才是墙面与长椅)。
+    # 固定 crop 只能**近似**框住主球场(网柱在 494s 是 x≈380/1540,1985s 是 x≈170/1660,
+    # 镜头会平移),所以"这一击属于主球场吗"最终要用**局部**判据
+    # (候选时刻的 ROI 运动能量 vs 该区间 ±2s 的局部中位基线),不是全局分位。
+    # 裁定 docs/裁定_非回合剔除与ROI门控返工.md §三 明文授权此路径。
+    exclude = [tuple(float(v) for v in iv) for iv in (s.get("exclude_intervals") or [])]
+
+    # ---- 长回合保障(阈值来自配置,不硬编码) ----
+    long_shots = int(s["long_rally_shots"])
+    long_force = bool(s["long_rally_force"])
+    long_exempt_score = bool(s["long_rally_exempt_score_evidence"])
+
+    def is_long(x):
+        """长回合判定用**混合计数上界**(门控前的计数 shots_ungated)。
+
+        门控只修正「报出来的拍数」,不应该改变「哪些段算长回合」的内容判定 ——
+        否则门控把长回合的拍数压到 30 以下,no_score_evidence 豁免随之失效,
+        好内容反而被丢掉(实测 9 条长回合段有 4 条因此不进片)。
+        上界口径是保守的:只有连混音上界都够不到 30 拍的段,才算不上长回合。
+        """
+        return max(x.get("shots", 0), x.get("shots_ungated", 0)) >= long_shots
+
     BUCKET = s["bucket_seconds"]
     # 运动能量的采样间隔(秒)。运动序列按此间隔索引,
     # 不能用音频网格 BUCKET —— 两者只在 motion_sample_fps=5 时恰好相等。
@@ -164,6 +190,11 @@ def main():
     for r in rallies:
         if r["shots"] < min_shots:
             continue
+        if any(r["end"] > x0 and r["start"] < x1 for x0, x1 in exclude):
+            dropped.append({"start": r["start"], "end": r["end"], "shots": r["shots"],
+                            "reason": "manual_exclude",
+                            "detail": "命中 select.exclude_intervals(人工闸门;数据源=负样本 GT)"})
+            continue
         h = r["hits"]
         t_first, t_last = h[0], h[-1]
         i_first, i_last = at_idx(t_first), at_idx(t_last)
@@ -196,11 +227,18 @@ def main():
         base_hit = float(np.median(rin)) if rin else 0.0
 
         # --- 不确定判定 ---
+        long_rally = is_long(r)
         reason = None
         if gap_before < s["boundary_min_gap"] and gap_after < s["boundary_min_gap"]:
             reason = ("boundary_split", f"前 {gap_before:.1f}s / 后 {gap_after:.1f}s 均无明显能量变化")
         elif pk < base_hit * s["score_peak_ratio"] and pk < s["score_peak_floor"]:
             reason = ("no_score_evidence", f"末拍后峰值 {pk:.2f} 不显著(基准 {base_hit:.2f})")
+        # 长回合豁免:开启 long_rally_force 时,长回合不因"缺得分佐证"被剔除 ——
+        # 30+ 拍的长回合常以一个平淡的球收尾,末拍后没有明显响动,
+        # 但这恰恰是最该保留的高光。剔除它等于把最好的素材扔掉。
+        if (reason and long_rally and long_force and long_exempt_score
+                and reason[0] == "no_score_evidence"):
+            reason = None
         if reason:
             dropped.append({"start": r["start"], "end": r["end"], "shots": r["shots"],
                             "reason": reason[0], "detail": reason[1]})
@@ -218,7 +256,8 @@ def main():
         ivs = [h[i + 1] - h[i] for i in range(len(h) - 1)]
         scored.append({
             "start": round(start, 2), "end": round(end, 2),
-            "shots": r["shots"], "regularity": round(r["regularity"], 3),
+            "shots": r["shots"], "shots_ungated": r.get("shots_ungated", r["shots"]),
+            "regularity": round(r["regularity"], 3),
             "duration": round(r["duration"], 2),
             "mean_interval": round(r["mean_interval"], 3),
             "min_interval": round(min(ivs), 3) if ivs else 1.0,
@@ -249,11 +288,30 @@ def main():
 
     scored.sort(key=lambda x: -x["score"])
     chosen, used = [], 0.0
+
+    def too_close(x, pool):
+        return any(abs(x["start"] - y["end"]) < s["min_gap_between"] for y in pool)
+
+    # ---- 第一轮:长回合强制入选 ----
+    # 需求:≥long_rally_shots 拍的长回合必须出现在成片里。
+    # 所以它们先于其它候选入选,且不受时长预算限制(宁可成片变长也不丢长回合)。
+    # 长回合之间不做间隔过滤:两个相邻的长回合更可能是同一回合被切开的两段,
+    # 而漏掉一个 ≥30 拍的回合是硬性验收项的失败。重复内容由联系表人工核验兜底。
+    if long_force:
+        for x in scored:
+            if not is_long(x):
+                continue
+            chosen.append(x)
+            used += (x["end"] - x["start"]) / speed
+
+    # ---- 第二轮:其余候选按分数填充剩余预算 ----
     for x in scored:
+        if long_force and is_long(x):
+            continue
         dur = (x["end"] - x["start"]) / speed
         if used + dur > target:
             continue
-        if any(abs(x["start"] - y["end"]) < s["min_gap_between"] for y in chosen):
+        if too_close(x, chosen):
             continue
         chosen.append(x)
         used += dur
@@ -269,8 +327,16 @@ def main():
     print(f"chosen {len(chosen)}  total {used:.1f}s @ {speed}x  "
           f"(candidates {len(scored)}, dropped {len(dropped)})")
     print(f"  移除原因: {reasons}")
+    print(f"  人工闸门(select.exclude_intervals)覆盖 {reasons.get('manual_exclude', 0)} 段")
+    # 长回合清单:R4 的证据(哪些 ≥N 拍的回合进了片子)
+    long_all = [r for r in rallies if is_long(r)]
+    long_scored = [x for x in scored if is_long(x)]
+    long_chosen = [x for x in chosen if is_long(x)]
+    print(f"  长回合(≥{long_shots} 拍):检测 {len(long_all)} / 候选 {len(long_scored)} "
+          f"/ 入选 {len(long_chosen)}  强制纳入={long_force}")
     for i, x in enumerate(chosen):
-        print(f"  {i:2d} {x['start']:8.1f}-{x['end']:8.1f} ({x['end']-x['start']:5.1f}s) "
+        flag = "*" if is_long(x) else " "
+        print(f" {flag}{i:2d} {x['start']:8.1f}-{x['end']:8.1f} ({x['end']-x['start']:5.1f}s) "
               f"shots={x['shots']:3d} gap={x['gap_before']:.1f}/{x['gap_after']:.1f} "
               f"pk={x['score_peak']:.2f}/{x['hit_base']:.2f} sc={x['score']:.3f}")
 

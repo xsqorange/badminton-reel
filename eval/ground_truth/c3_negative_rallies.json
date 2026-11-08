@@ -1,0 +1,96 @@
+{
+  "source": "20261107_龙泽_3号场.mp4",
+  "clip": "c3",
+  "scope": "recall",
+  "set_role": "negative",
+  "window": {
+    "start": 0.0,
+    "end": 4833.3
+  },
+  "annotator": "Chief(独立裁定 446/1067) + agent:视频剪辑执行员(逐帧目视判定 493/1102/563)",
+  "annotation_method": "human_frame_review",
+  "method": "人工逐帧目视判定:该区间主球场**不是一次回合**(无连续对打)。逐帧看前景球员的动作 —— 单人挥拍练习 / 走动 / 换人 / 站着与弯腰捡球,都不构成回合。",
+  "shots_source": "human_frame_review(逐候选帧目视判定,shots = 区间内明确击球动作数)",
+  "notes": [
+    "★负样本**不计入长回合召回**(口径 E):评测脚本遇到 is_rally=false 的条目只做「误报检查」,",
+    "  即看检测器有没有把非回合报成 >=30 拍的长回合。",
+    "★这 5 条就是上一轮把非回合写进真值的那一批。上一轮按音频瞬态直接计拍,",
+    "  把背景场地(4~5 片)的击球声算成了主球场的拍数 —— 这才是「幽灵长回合」的根因。",
+    "★人工逐拍结论:这 5 个区间里前景主球场的明确击球动作分别是 0/0/3/0/2 拍,",
+    "  音频却给出 37~49 个强瞬态 —— 差 10 倍以上,说明**全轨音频不能直接计拍**。",
+    "★shots_uncertain:false(这几条的「不是回合」判断是清楚的);但 shots 的绝对值仍有 ±2~3 的带,",
+    "  因为「站立持拍」与「击球间歇」在 4fps 单帧上无法完全分开。"
+  ],
+  "rallies": [
+    {
+      "id": "L02",
+      "start": 446.9,
+      "end": 483.4,
+      "shots": 0,
+      "shots_uncertain": false,
+      "shots_uncertainty": 3,
+      "is_rally": false,
+      "annotation_method": "human_frame_review",
+      "annotator": "Chief(独立裁定) + agent:视频剪辑执行员(复核)",
+      "shots_source": "human_frame_review(work/acceptance/dispute_446.png)",
+      "evidence": "work/acceptance/dispute_446.png",
+      "note": "深绿衣球员**单人挥拍练习**(深绿衣在前景反复挥拍),白衣球员只是站着/走动;全程无来回。"
+    },
+    {
+      "id": "L05",
+      "start": 1067.3,
+      "end": 1099.2,
+      "shots": 0,
+      "shots_uncertain": false,
+      "shots_uncertainty": 2,
+      "is_rally": false,
+      "annotation_method": "human_frame_review",
+      "annotator": "Chief(独立裁定) + agent:视频剪辑执行员(复核)",
+      "shots_source": "human_frame_review(work/acceptance/dispute_1067.png)",
+      "evidence": "work/acceptance/dispute_1067.png",
+      "note": "单人走动换人(1090.7 有白衣人进来),无击球动作。"
+    },
+    {
+      "id": "L07",
+      "start": 493.4,
+      "end": 520.2,
+      "shots": 0,
+      "shots_uncertain": false,
+      "shots_uncertainty": 3,
+      "is_rally": false,
+      "annotation_method": "human_frame_review",
+      "annotator": "agent:视频剪辑执行员",
+      "shots_source": "human_frame_review(work/sheets/gtreview/L07.png)",
+      "evidence": "work/sheets/gtreview/L07.png",
+      "note": "与 L02 同一形态:深绿衣球员单人挥拍/踢腿练习,白衣球员进场后一直站着;25 个候选瞬态在帧上没有一个对应前景击球。"
+    },
+    {
+      "id": "L03",
+      "start": 1102.2,
+      "end": 1130.9,
+      "shots": 3,
+      "shots_uncertain": false,
+      "shots_uncertainty": 3,
+      "is_rally": false,
+      "annotation_method": "human_frame_review",
+      "annotator": "agent:视频剪辑执行员",
+      "shots_source": "human_frame_review(work/sheets/gtreview/L03.png)",
+      "evidence": "work/sheets/gtreview/L03.png",
+      "note": "两人全程以站立持拍/走动/弯腰捡球为主,没有连续来回;26 个候选里只有 3 帧有明确击球动作。"
+    },
+    {
+      "id": "L19",
+      "start": 563.9,
+      "end": 584.6,
+      "shots": 2,
+      "shots_uncertain": false,
+      "shots_uncertainty": 3,
+      "is_rally": false,
+      "annotation_method": "human_frame_review",
+      "annotator": "agent:视频剪辑执行员",
+      "shots_source": "human_frame_review(work/sheets/gtreview/L19.png)",
+      "evidence": "work/sheets/gtreview/L19.png",
+      "note": "两人站立/走动/弯腰捡球,无连续回合;19 个候选里只有 2 帧有明确击球动作。"
+    }
+  ]
+}

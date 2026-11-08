@@ -198,6 +198,29 @@ def aes_ecb_encrypt(data, key):
 def padded_size(n):
     return ((n + 1 + 15) // 16) * 16
 
+
+def aes_key_base64(aeskey):
+    """把 16 字节 AES 密钥转成 iLink 出站 item 里的 `media.aes_key`。
+
+    严格对齐桌面端 SDK 的 `aesKeyHexToBase64()`:
+
+        Buffer.from(uploaded.aeskey).toString('base64')
+
+    其中 `uploaded.aeskey` 是 **32 字符的 hex 字符串**,而 `Buffer.from(str)`
+    不带编码参数时默认按 **utf8** 处理 —— 所以结果是
+    base64(32 个 hex 字符的 ASCII 字节) = **44 字符**。
+
+    ⚠️ 不能写成 base64(16 字节原始密钥)(那是 24 字符)。
+    SDK 的 `parseAesKey` 注释写明了野外存在两种形态,且按 item 类型区分:
+
+        base64(raw 16 bytes)  -> images
+        base64(hex string)    -> file / voice / video
+
+    微信端按类型解析。视频用错形态的表现是:消息照常送达、能显示时长,
+    但点开「播放失败」——客户端解不开密钥。
+    """
+    return base64.b64encode(aeskey.hex().encode("utf-8")).decode()
+
 def get_upload_url(token, to_user_id, buf, media_type, filekey, aeskey_hex):
     rawsize = len(buf)
     rawfilemd5 = hashlib.md5(buf).hexdigest()
@@ -230,6 +253,20 @@ def cdn_upload(ciphertext, upload_param, upload_full_url, filekey, token):
         return dp
 
 def send_message(token, to_user_id, context_token, items):
+    """发一条消息(每个 item 单独调一次,见 docs/微信通道.md 坑 1)。
+
+    `context_token` 在桌面端 SDK 里是必填项,来源是**入站消息**
+    (`readContextTokenFromCtx` 读 ctx.contextToken / ctx.platformSpecific.contextToken,
+    桌面端另有 contextTokenByChat 缓存兜底)。
+
+    我们默认传一个合成值 —— 实测服务端此前不校验它的值,但那不是契约:
+    服务端一旦在 prepare 阶段开始校验,伪造值就会失效。
+    需要传真实 token 时用环境变量 WX_CTX 覆盖。
+
+    ⚠️ `sendmessage` 返回 {"ret":-2,"errmsg":"prepare failed"} 时,不要反复重试。
+    先跑 tools/wx_channel_diag.py 判断是通道故障还是请求问题
+    (getconfig / sendtyping 正常但 sendmessage 失败 = 服务端出站管线问题)。
+    """
     body = {
         "msg": {
             "from_user_id": "",

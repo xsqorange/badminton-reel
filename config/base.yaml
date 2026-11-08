@@ -55,6 +55,15 @@ analysis:
   # 一个回合至少几拍才算"多拍对抗"(选段阶段过滤)
   min_shots: 4
 
+  # ---- 主球场限定(默认关闭,由 profile 打开)----
+  # 运动能量只统计主球场 ROI 的 ffmpeg crop 参数;null = 全画面(旧行为)。
+  motion_roi: null
+  # 画面-音频共现门控:只有此刻主球场在剧烈运动才认这一拍。0 = 不门控(旧行为)。
+  shot_gate_percentile: 0.0
+  shot_gate_window: 0.6
+  # 回合合并:把间隔 <= 该值的相邻片段接回一个回合。0 = 不合并(旧行为)。
+  rally_merge_gap: 0.0
+
 
 # ---------- 选段参数 ----------
 select:
@@ -119,6 +128,25 @@ select:
   duration_score_tier3: 0.75
   duration_score_tier4: 0.5
 
+  # ---- 长回合保障 ----
+  # 拍数 ≥ long_rally_shots 的回合属于"长回合"。
+  # 需求:超 30 拍的长回合要重点关注并纳入成片 —— 阈值是配置项,不是硬编码。
+  long_rally_shots: 30
+  # 是否启用"长回合强制纳入成片"。
+  #   开启后:长回合先于其它候选入选,且不受时长预算限制;
+  #   同时豁免"缺得分佐证"剔除(30+ 拍的长回合常以一个平淡的球收尾,
+  #   末拍后没有明显响动,但这恰恰是最该保留的高光)。
+  # 默认关闭:保持 10月31日 / 11月1日 两批的选段结果与归档基线逐字节一致
+  #   (tools/verify_equivalence.py 会核验这一点);需要时由 profile 打开。
+  long_rally_force: false
+  # 长回合豁免"缺得分佐证"剔除(仅在 long_rally_force=true 时生效)
+  long_rally_exempt_score_evidence: true
+
+  # ---- 人工闸门:显式排除的区间(源时间轴,秒)----
+  # 默认空 = 不排除。启用后,落在这些区间里的回合不进选段。
+  # 数据源必须是 eval/ground_truth/c3_negative_rallies.json(人工逐帧判定的非回合)。
+  exclude_intervals: []
+
 
 # ---------- 构建参数 ----------
 build:
@@ -137,6 +165,8 @@ encode:
   # fps 滤镜参数:基于时间戳等距重采样,消除源 VFR 抖动
   fps_round: "near"
   fps_start_time: 0
+  # 注:fps 滤镜已做 CFR 重采样(eliminate -vsync VFR),这里的 -vsync cfr
+  # 只作用在滤镜输出流上,两者不冲突。裁定要求:值不动,只补语义说明。
   vsync: "cfr"
 
   preset: "p5"
@@ -194,6 +224,55 @@ wechat:
   bufsize: "3600k"
   # 目标体积 ~82MB,iLink CDN 对大文件不友好
   # preset/tune/pix_fmt/g 未列出时继承 encode 段的同名项
+
+
+# ---------- 评估集 / 回归评测 ----------
+eval:
+  # 标注(ground truth)文件目录,相对项目根
+  ground_truth_dir: "eval/ground_truth"
+  # 回归基线报告路径:一键对比"算法改动前后"的指标变化
+  baseline_report: "eval/baseline/baseline.json"
+  # 回合匹配判据:预测回合与标注回合的重叠时长 / 标注回合时长 ≥ 该值算命中
+  match_overlap_ratio: 0.5
+  # 选段完整性:片段覆盖标注回合时长的该比例,算"从发球到得分的完整回合"
+  complete_ratio: 0.9
+  # 长回合判定阈值(应与 select.long_rally_shots 保持一致)
+  long_rally_shots: 30
+  # 回归对比容差:任一指标相对基线下降超过该值即判为回归(退出码非 0)
+  regression_tolerance: 0.005
+
+
+# ---------- 标注工具(生成人工核验联系表) ----------
+annotation:
+  # 标注窗口(秒):[起, 止]
+  window: [1200.0, 2400.0]
+  # 窗口内统一抽帧的帧率(联系表的所有帧都从这一套里挑)
+  frame_rate: 2
+  # 联系表抽帧尺寸
+  frame_width: 320
+  frame_height: 180
+  # 每个候选回合抽几帧(均匀覆盖 前后各 context_seconds 的上下文)
+  frames_per_rally: 6
+  # 候选前后各留的上下文(秒)
+  context_seconds: 1.5
+  # 每张联系表放几行
+  rows_per_sheet: 8
+  # 标签字体(留空则用 PIL 默认字体)
+  font: "C:/Windows/Fonts/arial.ttf"
+  # 字号
+  font_size: 15
+  # 空档扫描:未被候选覆盖的间隔超过该秒数才扫
+  gap_scan_min_seconds: 6.0
+  # 空档扫描的抽帧间隔(秒)
+  gap_scan_step_seconds: 2.0
+  # ---- 音频包络条(独立核对长回合拍数) ----
+  # 人眼在联系表上点不出"第 37 拍",但能在包络上数出明显的瞬态个数。
+  env_width: 1600
+  env_height: 70
+  env_sr: 48000
+  env_win_ms: 10
+  # 只给拍数 ≥ 该值的回合出包络条(长回合才需要逐拍核对)
+  env_min_shots: 16
 
 
 # ---------- 输出 ----------
